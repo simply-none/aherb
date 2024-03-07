@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@dcloudio/uni-ui": "^1.4.20",
+    "axios": "^0.27.2",
+    "lodash": "^4.17.21",
+    "sass": "^1.71.1",
+    "sass-loader": "^14.1.1",
+    "uview-ui": "^2.0.31"
+  }
+}

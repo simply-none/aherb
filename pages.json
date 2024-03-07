@@ -1,0 +1,116 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      // uView 配置
+      "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+    }
+  },
+  "pages": [{
+      "path": "pages/user/index",
+      "style": {
+        "navigationStyle": "custom"
+        // "navigationBarTitleText": "个人中心",
+        // "navigationBarTextStyle": "white",
+        // "navigationBarBackgroundColor": "#007AFF"
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationStyle": "custom"
+        // "navigationBarTitleText": "登录页",
+        // "navigationBarTextStyle": "white",
+        // "navigationBarBackgroundColor": "#007AFF"
+      }
+    },
+    {
+      "path": "pages/nav/nav",
+      "style": {
+        "navigationStyle": "custom"
+        // "navigationBarTitleText": "登录页",
+        // "navigationBarTextStyle": "white",
+        // "navigationBarBackgroundColor": "#007AFF"
+      }
+    },
+    {
+      "path": "pages/a/a",
+      "style": {
+        "navigationStyle": "custom"
+        // "navigationBarTitleText": "登录页",
+        // "navigationBarTextStyle": "white",
+        // "navigationBarBackgroundColor": "#007AFF"
+      }
+    },
+    {
+      "path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
+      "style": {
+        "disableScroll": true,
+        "app-plus": {
+          "backgroundColorTop": "transparent",
+          "background": "transparent",
+          "titleNView": false,
+          "scrollIndicator": false,
+          "popGesture": "none",
+          "animationType": "fade-in",
+          "animationDuration": 200
+        }
+      }
+    },
+    {
+      "path": "pages/test_nvue",
+      "style": {
+        "navigationStyle": "custom"
+        // "navigationBarTitleText": "view 预览2",
+        // "navigationBarTextStyle": "white",
+        // "navigationBarBackgroundColor": "#007AFF",
+        // "enablePullDownRefresh": true
+      }
+    }
+  ],
+
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#00b783",
+    "borderStyle": "#fff",
+    "backgroundColor": "#e8e8e8",
+    "list": [{
+        "pagePath": "pages/test_nvue",
+        "text": "测试",
+        "iconPath": "static/image001.png",
+        "selectedIconPath": "static/image001.png"
+      },
+      {
+        "pagePath": "pages/a/a",
+        "text": "导航2a",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png"
+      },
+      {
+        "pagePath": "pages/nav/nav",
+        "text": "导航",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "个人中心",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "app-plus": {
+      "titleNView": false
+    },
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "uniIdRouter": {}
+}
