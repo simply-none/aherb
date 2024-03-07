@@ -12,7 +12,7 @@
     data() {
       return {
         titleName: "",
-        urll: 'http://192.168.1.113:8080/#/pages/index/index',
+        urll: 'https://www.baidu.com',
         navHeight: 95 //80
       }
     },

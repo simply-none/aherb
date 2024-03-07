@@ -2,7 +2,7 @@
   <view>
 
 
-    <uni-nav-bar class="uni-nav-bar" dark shadow left-icon="left" leftText="返回" rightText="设置" title="自定义高度" />
+
     <view class="userBox">
       <view>
         <u-avatar :src="src" size="80"></u-avatar>

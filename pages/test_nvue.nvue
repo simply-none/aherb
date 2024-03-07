@@ -4,13 +4,13 @@
       <block slot="left">
         <view class="nav">
           <uni-icons type="arrowLeft" color="#666" size="12" />
-          <text class="item">返回</text>
+          <text class="item" @click="goback">返回</text>
         </view>
       </block>
       <view class="flex-0">
         <view class="nav flex-1">
           <uni-icons type="arrowLeft" color="#666" size="12" />
-          <text class="item-nvue">导航nvue</text>
+          <text class="item-nvue">应用-功能nvue</text>
         </view>
       </view>
       <block slot="right">
@@ -70,6 +70,9 @@
       })
     },
     methods: {
+      goback() {
+        uni.navigateBack()
+      },
       onClickBtn(data) {
         //console.log(data);
         uni.showToast({
