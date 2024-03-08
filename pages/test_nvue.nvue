@@ -1,16 +1,17 @@
 <template>
   <view>
-    <uni-nav-bar dark>
+    <status-bar></status-bar>
+    <uni-nav-bar>
       <block slot="left">
         <view class="nav">
-          <uni-icons type="arrowLeft" color="#666" size="12" />
+          <uni-icons type="arrowLeft" color="#666" size="32" />
           <text class="item" @click="goback">返回</text>
         </view>
       </block>
       <view class="flex-0">
         <view class="nav flex-1">
           <uni-icons type="arrowLeft" color="#666" size="12" />
-          <text class="item-nvue">应用-功能nvue</text>
+          <text class="item item-center">应用-功能nvue</text>
         </view>
       </view>
       <block slot="right">
@@ -35,8 +36,11 @@
 
 <script>
   import StWebView from '../components/st-web-nview.vue'
+  import StatusBar from '../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
+  
   export default {
     components: {
+      StatusBar,
       StWebView
     },
     options: {
@@ -172,8 +176,11 @@
   }
 
   .item {
-    font-size: 10rpx;
-    color: #fff;
+    color: #333333;
+    font-size: 28rpx;
+    &-center {
+      font-size: 32rpx;
+    }
   }
 
   .item-nvue {

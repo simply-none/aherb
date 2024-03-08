@@ -1,7 +1,7 @@
 <template>
   <view class="sba-data-board">
     <status-bar></status-bar>
-    <uni-nav-bar class="uni-nav-bar" shadow title="数据看板" />
+    <uni-nav-bar class="uni-nav-bar"  title="数据看板" />
   </view>
 </template>
 

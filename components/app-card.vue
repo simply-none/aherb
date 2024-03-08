@@ -7,10 +7,12 @@
         </text>
       </view>
       <u-grid class="sba-lasted-used-app-funcs-wrapper" :border="false">
-        <u-grid-item class="sba-lasted-used-app-funcs" v-for="func in app.children" :key="func.id" @click="towebapp">
-          <u-icon :customStyle="{paddingTop:20+'rpx'}" :name="'file-text'" :size="22"></u-icon>
-          <text class="sba-lasted-used-app-func">{{ func.name }}</text>
-        </u-grid-item>
+        <block v-for="func in app.children">
+          <u-grid-item class="sba-lasted-used-app-funcs" :key="func.id" @click="towebapp">
+            <u-icon :customStyle="{paddingTop:20+'rpx'}" :name="'file-text'" :size="22"></u-icon>
+            <text class="sba-lasted-used-app-func">{{ func.name }}</text>
+          </u-grid-item>
+        </block>
       </u-grid>
     </view>
   </view>

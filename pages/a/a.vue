@@ -1,7 +1,7 @@
 <template>
   <view class="">
     <status-bar></status-bar>
-    <uni-nav-bar class="uni-nav-bar" dark shadow left-icon="left" leftText="返回" rightText="设置"
+    <uni-nav-bar class="uni-nav-bar" dark  left-icon="left" leftText="返回" rightText="设置"
       title="自定义高度在vue文件,非满屏" />
     <web-view :src="urll"></web-view>
     <u-button style="">测试</u-button>

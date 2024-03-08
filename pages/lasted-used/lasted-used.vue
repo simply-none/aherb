@@ -1,7 +1,7 @@
 <template>
   <view class="sba-lasted-used">
     <status-bar></status-bar>
-    <uni-nav-bar class="uni-nav-bar" shadow title="最近使用" />
+    <uni-nav-bar class="uni-nav-bar"  title="最近使用" />
     <app-card></app-card>
   </view>
 </template>

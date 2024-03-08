@@ -1,18 +1,18 @@
 <template>
   <view class="sba-apps-nav-wapper">
     <status-bar></status-bar>
-    <uni-nav-bar class="uni-nav-bar" shadow title="应用导航" />
+    <uni-nav-bar class="uni-nav-bar"  title="应用导航" />
     <view :style="{
     height: wrapperHeight + 'px'
   }" class="sitir-basic-app-apps-nav sba-apps-nav">
       <!-- 左侧：一级导航列表 -->
       <view class="sba-apps-nav-lv1">
-        <u-list :scrollable='false' class="sba-apps-nav-lv1-list">
-          <u-list-item v-for="(item, index) in indexList" :key="index">
+        <view class="sba-apps-nav-lv1-list">
+          <view v-for="(item, index) in indexList" :key="index">
             <u-cell :title="`系统一级-${index + 1}`">
             </u-cell>
-          </u-list-item>
-        </u-list>
+          </view>
+        </view>
       </view>
 
       <!-- 右侧 -->
@@ -174,10 +174,17 @@
 
     onLoad() {
       this.getNav()
-      this.getSysInfo()
+      
+    },
+    onShow() {
+      // 必须使用nexttick，否则获取该函数没有任何作用
+      this.$nextTick(() => {
+        this.getSysInfo()
+      })
     },
     methods: {
       getSysInfo() {
+        console.log('this ')
         let that = this;
         uni.getSystemInfo({
           success: function(res) {

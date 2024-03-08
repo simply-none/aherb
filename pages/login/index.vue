@@ -1,5 +1,6 @@
 <template>
   <view class="sitir-basic-app-login sba-login">
+    <status-bar></status-bar>
     <view class="sba-login-app">
       <u-avatar class="sba-login-app-avatar" :src="logoUrl" shape="square" size="60"></u-avatar>
       <view class="sba-login-app-name">
@@ -59,7 +60,11 @@
 </template>
 
 <script>
+  import StatusBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   export default {
+    components: {
+      StatusBar,
+    },
     data() {
       return {
         loginData: {},

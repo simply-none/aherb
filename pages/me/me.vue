@@ -1,5 +1,6 @@
 <template>
   <view class="sitir-basic-app-me sba-me">
+    <status-bar></status-bar>
     <view class="sba-me-avatar">
       <u-avatar text="特" size="72" fontSize="24" randomBgColor></u-avatar>
       <view class="sba-me-info">
@@ -30,7 +31,11 @@
 </template>
 
 <script>
+  import StatusBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   export default {
+    components: {
+      StatusBar,
+    },
     data() {
       return {
         settings: [{
