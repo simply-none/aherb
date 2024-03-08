@@ -1,5 +1,6 @@
 <template>
   <view class="sba-lasted-used">
+    <status-bar></status-bar>
     <uni-nav-bar class="uni-nav-bar" shadow title="最近使用" />
     <app-card></app-card>
   </view>
@@ -7,8 +8,10 @@
 
 <script>
   import AppCard from '../../components/app-card.vue'
+  import StatusBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   export default {
     components: {
+      StatusBar,
       AppCard
     },
     data() {

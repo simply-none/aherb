@@ -1,5 +1,6 @@
 <template>
   <view class="sba-apps-nav-wapper">
+    <status-bar></status-bar>
     <uni-nav-bar class="uni-nav-bar" shadow title="应用导航" />
     <view class="sitir-basic-app-apps-nav sba-apps-nav">
       <!-- 左侧：一级导航列表 -->
@@ -30,8 +31,10 @@
 
 <script>
   import AppCard from '../../components/app-card.vue'
+  import StatusBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   export default {
     components: {
+      StatusBar,
       AppCard
     },
     data() {

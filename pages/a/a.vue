@@ -1,5 +1,6 @@
 <template>
   <view class="">
+    <status-bar></status-bar>
     <uni-nav-bar class="uni-nav-bar" dark shadow left-icon="left" leftText="返回" rightText="设置"
       title="自定义高度在vue文件,非满屏" />
     <web-view :src="urll"></web-view>
@@ -8,7 +9,11 @@
 </template>
 
 <script>
+  import StatusBar from '../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   export default {
+    components: {
+      StatusBar,
+    },
     data() {
       return {
         titleName: "",
