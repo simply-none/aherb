@@ -15,7 +15,4 @@
 <style lang="scss">
   // @import "uview-ui/index.scss";
   /*每个页面公共css */
-  uni-page-body {
-    height: 100%;
-  }
 </style>

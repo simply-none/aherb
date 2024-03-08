@@ -24,7 +24,7 @@
       </view>
     </view>
     <view class="sba-me-logout">
-      <u-button type="error" icon="map" text="登出"></u-button>
+      <u-button @click="logout" type="error" icon="lock-open" text="登出"></u-button>
     </view>
   </view>
 </template>
@@ -49,14 +49,16 @@
             {
               title: '检查更新'
             },
-
-
           ]
         }]
       }
     },
     methods: {
-
+      logout() {
+        uni.navigateTo({
+          url: '/pages/login/index'
+        })
+      },
     }
   }
 </script>

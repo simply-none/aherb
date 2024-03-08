@@ -21,19 +21,7 @@
           </u-sticky>
         </view>
         <!-- body: 应用及其功能项 -->
-        <view class="sba-apps-nav-app-wrapper" v-for="app in apps" :key="app.id">
-          <view class="sba-apps-nav-app-title">
-            <text class="sba-apps-nav-app-title-text">
-              {{ app.name }}
-            </text>
-          </view>
-          <u-grid class="sba-apps-nav-app-funcs-wrapper" :border="false" col="4">
-            <u-grid-item class="sba-apps-nav-app-funcs" v-for="func in app.children" :key="func.id" @click="towebapp">
-              <u-icon :customStyle="{paddingTop:20+'rpx'}" :name="'file-text'" :size="22"></u-icon>
-              <text class="sba-apps-nav-app-func">{{ func.name }}</text>
-            </u-grid-item>
-          </u-grid>
-        </view>
+        <app-card></app-card>
       </view>
     </view>
 
@@ -41,7 +29,11 @@
 </template>
 
 <script>
+  import AppCard from '../../components/app-card.vue'
   export default {
+    components: {
+      AppCard
+    },
     data() {
       return {
         apps: [{
@@ -171,7 +163,7 @@
     },
 
     onLoad() {
-      this.loadmore()
+      this.getNav()
     },
     methods: {
       towebapp() {
@@ -186,7 +178,7 @@
           }
         })
       },
-      loadmore() {
+      getNav() {
         for (let i = 0; i < 30; i++) {
           this.indexList.push({
             url: this.urls[uni.$u.random(0, this.urls.length - 1)]
@@ -245,6 +237,8 @@
           border-left: 18rpx solid #b3b3b3;
         }
       }
+
+      &-func {}
     }
   }
 </style>
