@@ -2,17 +2,19 @@
   <view class="sba-apps-nav-wapper">
     <status-bar></status-bar>
     <uni-nav-bar class="uni-nav-bar" shadow title="应用导航" />
-    <view class="sitir-basic-app-apps-nav sba-apps-nav">
+    <view :style="{
+    height: wrapperHeight + 'px'
+  }" class="sitir-basic-app-apps-nav sba-apps-nav">
       <!-- 左侧：一级导航列表 -->
       <view class="sba-apps-nav-lv1">
-        <u-list class="sba-apps-nav-lv1-list">
+        <u-list :scrollable='false' class="sba-apps-nav-lv1-list">
           <u-list-item v-for="(item, index) in indexList" :key="index">
             <u-cell :title="`系统一级-${index + 1}`">
-
             </u-cell>
           </u-list-item>
         </u-list>
       </view>
+
       <!-- 右侧 -->
       <view class="sba-apps-nav-lv2-wrapper">
         <!-- 顶部：二级导航滑动列表 -->
@@ -22,7 +24,10 @@
           </u-sticky>
         </view>
         <!-- body: 应用及其功能项 -->
-        <app-card></app-card>
+        <app-card :style="{
+    height: appsHeight + 'px',
+    overflow: 'auto'
+  }"></app-card>
       </view>
     </view>
 
@@ -39,6 +44,8 @@
     },
     data() {
       return {
+        wrapperHeight: null,
+        appsHeight: null,
         apps: [{
             name: '应用1111',
             children: [{
@@ -167,8 +174,27 @@
 
     onLoad() {
       this.getNav()
+      this.getSysInfo()
     },
     methods: {
+      getSysInfo() {
+        let that = this;
+        uni.getSystemInfo({
+          success: function(res) {
+            uni.createSelectorQuery().select('.uni-status-bar').boundingClientRect().select('.uni-nav-bar')
+              .boundingClientRect().select('.sba-apps-nav-lv2')
+              .boundingClientRect().exec(data => {
+                console.log(res, data, 'res data')
+                that.wrapperHeight = res.windowHeight - (data[0].height || 0) - (data[1].height || 0)
+                that.appsHeight = that.wrapperHeight - (data[2].height || 0)
+              })
+          },
+          fail(err) {
+            console.log(err, 'err')
+          }
+
+        });
+      },
       towebapp() {
         console.log('to-app', uni)
         uni.navigateTo({
@@ -196,10 +222,12 @@
   .sba-apps-nav {
     display: flex;
     flex-direction: row;
+    // overflow: hidden;
 
     // 左侧
     &-lv1 {
       width: 200rpx;
+      overflow: auto;
 
       &-list {
         width: inherit;
@@ -214,11 +242,8 @@
     }
 
     &-lv2 {
-      ::v-deep .u-tabs__wrapper__nav__item__text {
-        // color: rgb(48, 49, 51);
-        // border: 3rpx solid #313131;
-        // border-radius: 3rpx;
-        // padding: 3rpx;
+      &-wrapper {
+        overflow: auto;
       }
     }
 
