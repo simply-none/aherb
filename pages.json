@@ -8,8 +8,7 @@
       "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
     }
   },
-  "pages": [
-    {
+  "pages": [{
       "path": "pages/me/me",
       "style": {
         "navigationStyle": "custom"
@@ -160,6 +159,7 @@
     ]
   },
   "globalStyle": {
+    "pageOrientation": "auto",
     "navigationStyle": "custom",
     "app-plus": {
       "titleNView": false
