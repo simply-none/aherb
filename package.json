@@ -1,10 +1,18 @@
 {
-  "dependencies": {
-    "@dcloudio/uni-ui": "^1.4.20",
-    "axios": "^0.27.2",
-    "lodash": "^4.17.21",
-    "sass": "^1.71.1",
-    "sass-loader": "^14.1.1",
-    "uview-ui": "^2.0.31"
-  }
+    "id": "xtx-treeNode",
+    "name": "uniapp树形选择、机构选择、部门选择、递归组件。",
+    "displayName": "uniapp树形选择、机构选择、部门选择、递归组件。",
+    "version": "1.0.1",
+    "description": "树形选择组件，可选择任意级。",
+    "keywords": [
+        "树形选择",
+        "机构选择",
+        "递归组件"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    }
 }

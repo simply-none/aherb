@@ -1,10 +1,10 @@
 <template>
-  <view>
-    <web-view ref="webview" :style="{
-			width: '100%',
-			height: '200px'
+  <web-view ref="webview" :webview-styles="{
+    progress: {
+      color: '#eee'
+    }
+  }" :style="{
 		}" :fullscreen='false' :src="webUrl" @onPostMessage="receiveMessage" @message="receiveMessage"></web-view>
-  </view>
 </template>
 
 <script>

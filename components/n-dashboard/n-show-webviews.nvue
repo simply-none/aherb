@@ -1,0 +1,89 @@
+<template>
+  <view class="sitir-basic-app-dashboard-show-apps sbadsa">
+    <text class=" font-size-base">展示所有打开应用</text>
+    <view v-for="app in apps" :key="app.id">
+      <text class=" font-size-base">
+        {{ app.url }}
+      </text>
+    </view>
+  </view>
+</template>
+
+<script>
+  export default {
+    props: {
+      apps: {
+        type: [Array],
+        default: () => [],
+      },
+    },
+    data() {
+      return {
+
+      };
+    },
+    methods: {
+      setActiveWebview(app) {
+        this.$emit('setActiveWebview', {
+          id: Date.now(),
+          url: 'https://www.baidu.com/s?wd=' + app
+        })
+      },
+      closeSetting() {
+        console.log('close')
+        this.$emit('close')
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  .sbadan {
+    display: flex;
+    flex: 1;
+    flex-flow: row nowrap;
+
+    &-sys {
+      width: 100rpx;
+      display: flex;
+
+      &-inner {
+        flex: 1;
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 6rpx;
+      }
+    }
+
+    &-domain {
+      width: 100rpx;
+      display: flex;
+
+      &-inner {
+        flex: 1;
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 20rpx;
+      }
+    }
+
+    &-apps {
+      flex: 1;
+      display: flex;
+      flex-flow: row wrap;
+
+      &-inner {
+        flex: 1;
+        display: flex;
+        flex-flow: row wrap;
+        padding: 6rpx;
+      }
+    }
+
+    &-divider {
+      width: 1rpx;
+      background-color: #dcdfe6;
+
+    }
+  }
+</style>

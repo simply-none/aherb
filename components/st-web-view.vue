@@ -1,7 +1,7 @@
 <template>
-  <view class="web-view-wrap" style="position: fixed; height: 200px; top: 100px;">
+  <view class="web-view-wrap" :style="viewStyle">
     <web-view ref="webview" :src="webUrl" @onPostMessage="receiveMessage" @message="receiveMessage" :fullscreen="false"
-      style="height: 200px; top: 100px;"></web-view>
+      class="web-view-inner" :style="viewStyle"></web-view>
   </view>
 </template>
 
@@ -9,7 +9,14 @@
   export default {
     name: "st-web-view",
     props: {
-      webUrl: String
+      webUrl: String,
+      viewStyle: {
+        type: Object,
+        default: () => ({
+          width: '100%',
+          height: '100%',
+        })
+      }
     },
     data() {
       return {
@@ -58,8 +65,4 @@
 </script>
 
 <style>
-  .web-view-wrap {
-    position: fixed;
-    top: 280px;
-  }
 </style>

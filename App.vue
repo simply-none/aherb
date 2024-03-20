@@ -13,6 +13,8 @@
 </script>
 
 <style lang="scss">
-  // @import "uview-ui/index.scss";
-  /*每个页面公共css */
+  // page是修改uni-page-body的样式
+  page {
+    // height: 100%;
+  }
 </style>

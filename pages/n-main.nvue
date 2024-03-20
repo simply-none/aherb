@@ -1,0 +1,41 @@
+<template>
+  <n-dashboard>
+    <view class="sitir-basic-app-main sbam-web-view">
+      <st-web-view class="sbam-web-view-inner" web-url="https://www.baidu.com"></st-web-view>
+    </view>
+  </n-dashboard>
+</template>
+
+<script>
+  import StWebView from '@/components/st-web-nview.vue'
+  import NDashboard from '@/components/n-dashboard/n-dashboard.nvue'
+  export default {
+    components: {
+      StWebView,
+      NDashboard
+    },
+    onLoad() {},
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+
+    }
+  }
+</script>
+
+<style lang='scss' scoped>
+  .sbam {
+    &-web-view {
+      flex: 1;
+      display: flex;
+
+      &-inner {
+        flex: 1;
+        z-index: -10000;
+      }
+    }
+  }
+</style>

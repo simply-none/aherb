@@ -1,7 +1,7 @@
 <template>
   <view class="sba-apps-nav-wapper">
     <status-bar></status-bar>
-    <uni-nav-bar class="uni-nav-bar"  title="应用导航" />
+    <uni-nav-bar class="uni-nav-bar" title="应用导航" />
     <view :style="{
     height: wrapperHeight + 'px'
   }" class="sitir-basic-app-apps-nav sba-apps-nav">
@@ -174,7 +174,7 @@
 
     onLoad() {
       this.getNav()
-      
+
     },
     onShow() {
       // 必须使用nexttick，否则获取该函数没有任何作用
@@ -226,54 +226,4 @@
 </script>
 
 <style lang="scss" scoped>
-  .sba-apps-nav {
-    display: flex;
-    flex-direction: row;
-    // overflow: hidden;
-
-    // 左侧
-    &-lv1 {
-      width: 200rpx;
-      overflow: auto;
-
-      &-list {
-        width: inherit;
-      }
-    }
-
-
-    // 右侧
-    &-lv2-wrapper {
-      width: calc(100% - 200rpx);
-      flex: 1;
-    }
-
-    &-lv2 {
-      &-wrapper {
-        overflow: auto;
-      }
-    }
-
-    &-app {
-      &-funcs-wrapper {
-        margin: 16rpx;
-        border: 1px solid #eeeeee;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-      }
-
-      &-title {
-
-        &-text {
-          font-size: 1.2em;
-          font-weight: 400;
-          color: #3c3c3c;
-          display: inline-block;
-          padding: 10rpx;
-          border-left: 18rpx solid #b3b3b3;
-        }
-      }
-
-      &-func {}
-    }
-  }
 </style>

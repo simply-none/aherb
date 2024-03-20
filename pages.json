@@ -8,7 +8,59 @@
       "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
     }
   },
-  "pages": [{
+  "pages": [
+
+    {
+      "path": "pages/n-login",
+      "style": {
+        "navigationStyle": "custom"
+      }
+
+    },
+    {
+      "path": "pages/n-main",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/test_nvue",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/n-select-env/n-select-env",
+      "style": {
+        "navigationStyle": "custom"
+      }
+
+    }, {
+      "path": "pages/n-apps/n-apps",
+      "style": {
+        "navigationStyle": "custom"
+      }
+
+    }, {
+      "path": "pages/n-open-apps/n-open-apps",
+      "style": {
+        "navigationStyle": "custom"
+      }
+
+    }, {
+      "path": "pages/n-change-env/n-change-env",
+      "style": {
+        "navigationStyle": "custom"
+      }
+
+    }, {
+      "path": "pages/n-edit-pwd/n-edit-pwd",
+      "style": {
+        "navigationStyle": "custom"
+      }
+
+    },
+    {
       "path": "pages/me/me",
       "style": {
         "navigationStyle": "custom"
@@ -94,72 +146,11 @@
           "animationDuration": 200
         }
       }
-    },
-    {
-      "path": "pages/test_nvue",
-      "style": {
-        "navigationStyle": "custom"
-        // "navigationBarTitleText": "view 预览2",
-        // "navigationBarTextStyle": "white",
-        // "navigationBarBackgroundColor": "#007AFF",
-        // "enablePullDownRefresh": true
-      }
     }
   ],
 
-  "tabBar": {
-    "color": "#999",
-    "selectedColor": "#00b783",
-    "borderStyle": "#fff",
-    "backgroundColor": "#e8e8e8",
-    "list": [{
-        "pagePath": "pages/apps-nav/apps-nav",
-        "text": "应用导航",
-        "iconPath": "static/daohang.png",
-        "selectedIconPath": "static/daohang-active.png"
-      },
-      {
-        "pagePath": "pages/data-board/data-board",
-        "text": "数据看板",
-        "iconPath": "static/kanban.png",
-        "selectedIconPath": "static/kanban-active.png"
-      },
-      {
-        "pagePath": "pages/lasted-used/lasted-used",
-        "text": "最近使用",
-        "iconPath": "static/changyong.png",
-        "selectedIconPath": "static/changyong-active.png"
-      },
-
-
-      {
-        "pagePath": "pages/me/me",
-        "text": "我",
-        "iconPath": "static/touxiang.png",
-        "selectedIconPath": "static/touxiang-active.png"
-      }
-      // {
-      //   "pagePath": "pages/test_nvue",
-      //   "text": "",
-      //   "iconPath": "static/image001.png",
-      //   "selectedIconPath": "static/image001.png"
-      // },
-      // {
-      //   "pagePath": "pages/test_nvue",
-      //   "text": "测试",
-      //   "iconPath": "static/image001.png",
-      //   "selectedIconPath": "static/image001.png"
-      // },
-      // {
-      //   "pagePath": "pages/a/a",
-      //   "text": "导航2a",
-      //   "iconPath": "static/logo.png",
-      //   "selectedIconPath": "static/logo.png"
-      // },
-    ]
-  },
   "globalStyle": {
-    "pageOrientation": "auto",
+    "pageOrientation": "landscape",
     "navigationStyle": "custom",
     "app-plus": {
       "titleNView": false
