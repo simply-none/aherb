@@ -4,22 +4,20 @@
     <u--form labelPosition="left" :labelWidth="132" labelAlign="right" :model="model1" :rules="rules" ref="uForm"
       class="sbadep-form">
 
-      <u-form-item label="当前账户:" borderBottom ref="item1">
-        <view>
-          200000000000
-        </view>
+      <u-form-item label="当前账户:" ref="item1">
+        <u--text class="sbadssd-account-name" text="000000000000"></u--text>
       </u-form-item>
-      <u-form-item label="原密码:" prop="userInfo.name" borderBottom ref="item1">
-        <u--input v-model="model1.userInfo.name"></u--input>
+      <u-form-item label="原密码:" prop="userInfo.name" ref="item1">
+        <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item label="新密码:" prop="userInfo.name" borderBottom ref="item1">
-        <u--input v-model="model1.userInfo.name"></u--input>
+      <u-form-item label="新密码:" prop="userInfo.name" ref="item1">
+        <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item label="再次输入新密码:" prop="userInfo.name" borderBottom ref="item1">
-        <u--input v-model="model1.userInfo.name"></u--input>
+      <u-form-item label="再次输入新密码:" prop="userInfo.name" ref="item1">
+        <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item borderBottom ref="item1">
-        <u-button @click="editPwd" type="primary" text="提交修改"></u-button>
+      <u-form-item ref="item1">
+        <u-button @click="editPwd" size="small" type="primary" text="提交修改"></u-button>
       </u-form-item>
     </u--form>
   </scroll-view>

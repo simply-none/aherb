@@ -35,9 +35,9 @@
 </template>
 
 <script>
-  import StWebView from '../components/st-web-nview.vue'
+  import StWebView from '../components/st-web-nview.nvue'
   import StatusBar from '../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
-  
+
   export default {
     components: {
       StatusBar,
@@ -178,6 +178,7 @@
   .item {
     color: #333333;
     font-size: 28rpx;
+
     &-center {
       font-size: 32rpx;
     }

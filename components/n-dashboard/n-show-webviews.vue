@@ -1,16 +1,23 @@
 <template>
   <view class="sitir-basic-app-dashboard-show-apps sbadsa">
     <text class=" font-size-base">展示所有打开应用</text>
-    <view v-for="app in apps" :key="app.id">
-      <text class=" font-size-base">
-        {{ app.url }}
-      </text>
+    <view v-for="app in apps">
+      <text class="font-size-base">{{ app.url }}</text>
+    </view>
+    <view class="sbadsa-body">
+      <template v-for="webView in apps">
+        <st-web-view :key="webView.url" :class="['sbadsa-web-view']" :web-url="webView.url"></st-web-view>
+      </template>
     </view>
   </view>
 </template>
 
 <script>
+  import StWebView from '@/components/st-web-nview.nvue'
   export default {
+    components: {
+      StWebView,
+    },
     props: {
       apps: {
         type: [Array],
@@ -38,45 +45,31 @@
 </script>
 
 <style lang="scss" scoped>
-  .sbadan {
+  .sbadsa {
     display: flex;
     flex: 1;
-    flex-flow: row nowrap;
+    flex-flow: column;
 
-    &-sys {
-      width: 100rpx;
-      display: flex;
-
-      &-inner {
-        flex: 1;
-        display: flex;
-        flex-flow: row nowrap;
-        padding: 6rpx;
-      }
-    }
-
-    &-domain {
-      width: 100rpx;
-      display: flex;
-
-      &-inner {
-        flex: 1;
-        display: flex;
-        flex-flow: row nowrap;
-        padding: 20rpx;
-      }
-    }
-
-    &-apps {
+    &-body {
       flex: 1;
       display: flex;
       flex-flow: row wrap;
 
+    }
+
+    &-web-view {
+      display: flex;
+      width: 250rpx;
+      height: 200rpx;
+      color: red;
+
       &-inner {
+        flex: 0;
+        z-index: -10000;
+      }
+
+      &-active {
         flex: 1;
-        display: flex;
-        flex-flow: row wrap;
-        padding: 6rpx;
       }
     }
 

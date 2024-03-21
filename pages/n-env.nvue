@@ -1,0 +1,176 @@
+<template>
+  <view class="sitir-basic-app-env sbae">
+    <status-bar></status-bar>
+    <view class="sbae-login">
+      <view class="sbae-top-logo">
+        <view class="sbae-logo">
+          <u-image class="sbae-logo-img" src="@/static/sitir_logo.jpg" mode="aspectFit"></u-image>
+          <u--text size="12" class="sbae-logo-title" text="四特酒聚合平台客户端"></u--text>
+        </view>
+        <view class="sbae-logo">
+          <u-image class="sbae-logo-img" src="@/static/sitir_logo.jpg" mode="aspectFit"></u-image>
+          <u--text size="12" class="sbae-logo-title" text="四特云"></u--text>
+        </view>
+      </view>
+
+      <u--form labelPosition="top" :labelWidth="146" labelAlign="right" :model="model1" :rules="rules" ref="uForm"
+        class="sbae-form">
+
+        <u-form-item label="入口地址:" prop="userInfo.name" ref="item1">
+          <u--input border="surround" v-model="model1.userInfo.name"></u--input>
+        </u-form-item>
+        <u-form-item label="环境选择:" prop="userInfo.name" ref="item1">
+          <u--input border="surround" v-model="model1.userInfo.name"></u--input>
+        </u-form-item>
+
+
+        <u-form-item ref="item1">
+          <view class="sbae-login-btn">
+            <u-button class="sbae-login-btn-inner" size="small" @click="setEnv" type="primary" text="选择"></u-button>
+          </view>
+        </u-form-item>
+      </u--form>
+
+    </view>
+
+  </view>
+</template>
+
+<script>
+  import StatusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
+  export default {
+    components: {
+      StatusBar
+    },
+    data() {
+      return {
+        curYear: (new Date()).getFullYear(),
+        model1: {
+          userInfo: {
+            name: 'uView UI',
+            sex: '',
+          },
+        },
+        rules: {
+          'userInfo.name': {
+            type: 'string',
+            required: true,
+            message: '请填写姓名',
+            trigger: ['blur', 'change']
+          },
+          'userInfo.sex': {
+            type: 'string',
+            max: 1,
+            required: true,
+            message: '请选择男或女',
+            trigger: ['blur', 'change']
+          },
+        },
+      }
+    },
+    methods: {
+      setEnv() {
+        uni.navigateBack({
+          url: '/pages/n-login',
+          success() {
+            console.log('suc')
+          },
+          fail(e) {
+            console.log('fi', e)
+          }
+        })
+      }
+    }
+  }
+</script>
+
+
+<style scoped lang="scss">
+  .sbae {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    margin: 0 100rpx;
+
+    // 环境设置
+    &-env {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 3rpx 6rpx;
+
+      &-icon {
+        display: flex;
+      }
+
+      &-text {
+        display: flex;
+        flex: 0;
+      }
+
+    }
+
+
+
+    // 表单
+
+    &-login {
+      flex: 3;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+
+      &-btn {
+        flex: 1;
+        color: red;
+        display: flex;
+        align-items: flex-end;
+
+        &-inner {
+          flex: 0;
+          width: 50rpx;
+          color: blue;
+        }
+      }
+    }
+
+    &-top-logo {
+      margin: 0 100rpx;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-logo {
+      flex: 1;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+
+      &-img {
+        width: 50rpx;
+        height: 50rpx;
+      }
+
+      &-title {
+        flex: 0;
+        display: flex;
+        padding: 6rpx;
+      }
+    }
+
+    &-form {
+      margin: 0 90rpx;
+
+    }
+
+    &-divider {
+      width: 1rpx;
+      margin: 100rpx 0;
+      background-color: #dcdfe6;
+
+    }
+  }
+</style>

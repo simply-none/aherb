@@ -27,7 +27,8 @@
     <scroll-view scroll-y="true" class="sbadan-apps">
       <block v-for="i in 50" :key="i">
         <view class="sbadan-apps-inner" @click="setActiveWebview(i)">
-          <u-icon name="bag"></u-icon>
+          <u--image mode="scaleToFill" width="50" height="50" class="sbal-simg"
+            src="https://cdn.uviewui.com/uview/album/1.jpg"></u--image>
           <text class="sbadan-apps-item font-size-base">
             应用：{{i}}
           </text>
@@ -54,7 +55,7 @@
     methods: {
       setActiveWebview(app) {
         this.$emit('setActiveWebview', {
-          id: Date.now(),
+          id: app,
           url: 'https://www.baidu.com/s?wd=' + app
         })
       },
@@ -73,7 +74,7 @@
     flex-flow: row nowrap;
 
     &-sys {
-      width: 100rpx;
+      width: 150rpx;
       display: flex;
 
       &-inner {
@@ -85,10 +86,12 @@
     }
 
     &-domain {
-      width: 100rpx;
+      width: 150rpx;
       display: flex;
 
+
       &-inner {
+
         flex: 1;
         display: flex;
         flex-flow: row nowrap;
@@ -104,8 +107,8 @@
       &-inner {
         flex: 1;
         display: flex;
-        flex-flow: row wrap;
-        padding: 6rpx;
+        flex-flow: column;
+        padding: 12rpx;
       }
     }
 

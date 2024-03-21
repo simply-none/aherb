@@ -23,6 +23,13 @@
         "navigationStyle": "custom"
       }
     },
+
+    {
+      "path": "pages/n-env",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
     {
       "path": "pages/test_nvue",
       "style": {

@@ -9,7 +9,7 @@
         <text class="sbad-title font-size-base">四特酒聚合平台客户端</text>
       </view>
       <view class="sbad-topright">
-        <view class="sbad-avatar"><u-avatar text="特" randomBgColor></u-avatar></view>
+        <view class="sbad-avatar"><u-avatar size="32" text="特" randomBgColor></u-avatar></view>
         <view class="sbad-org" @click="handleSelectOrgDialog(true)">
           <text class="sbad-org-title font-size-base">
             {{selectOrg.orgName || this.orgs[0].orgName || '选择组织' }}
@@ -31,21 +31,24 @@
 
       </view>
       <view class="sbad-divider"></view>
-      <view class="sbad-main">
+      <scroll-view scroll-y="true" :class="[showWebViews ? 'sbad-main-show' : 'sbad-main']">
         <!--
           此处遍历所有打开的web-view
           当点击某个web-view时，将其加入到打开的数组中
           当前web-view对象，设置为活跃对象，同时将其flex设为1
           非活跃对象，将其flex设为0，不占据任何空间
          -->
+        <view>
+          <text>1</text>
+        </view>
         <template v-for="webView in webViews">
-          <st-web-view :key="webView.url"
-            :class="['sbad-web-view', activeWebView.id === webView.id ? 'sbad-web-view-active' : '']"
-            :web-url="webView.url"></st-web-view>
+          <st-web-view :key="webView.url" :show="showWebViews"
+            :class="['sbad-web-view', activeWebView.id === webView.id ? 'sbad-web-view-active' : 'sbad-web-view-dective', showWebViews ? 'sbad-web-view-show' : '']"
+            :web-url="webView" @openActiveView="openActiveView"></st-web-view>
         </template>
 
         <!-- 覆盖在web-view上的设置 -->
-        <cover-view class="sbad-pop-setting" v-if="activeTab.openSetting">
+        <cover-view :class="[activeTab.openSetting ? 'sbad-pop-setting-show' : 'sbad-pop-setting']">
           <n-setting :title="activeTab.title" @close='handleCloseSetting'>
             <component :apps="webViews" :is="activeTab.component" @setActiveWebview="setActiveWebview">
               <component :is="innerCompInSys.component" @editTitle="editSysTitle"></component>
@@ -54,7 +57,7 @@
         </cover-view>
         <!-- 展示应用 -->
 
-      </view>
+      </scroll-view>
     </view>
     <u-popup :safeAreaInsetTop="true" class="sbad-popup" :show="show" mode="right"
       @close="handleSelectOrgDialog(false)">
@@ -63,23 +66,21 @@
         <view class="sbad-popup-scroll">
           <xtx-treeNode :list="orgs" @change="change"></xtx-treeNode>
         </view>
-
       </scroll-view>
-
     </u-popup>
   </view>
 </template>
 
 <script>
-  import NSysSettingSesc from '@/components/n-dashboard/n-sys-setting-desc.nvue'
-  import NEditPwd from '@/components/n-dashboard/n-edit-pwd.nvue'
-  import NShoWebviews from '@/components/n-dashboard/n-show-webviews.nvue'
-  import NAppNav from '@/components/n-dashboard/n-app-nav.nvue'
-  import NSysSetting from '@/components/n-dashboard/n-sys-setting.nvue'
-  import NSetting from '@/components/n-dashboard/n-setting.nvue'
+  import NSysSettingSesc from '@/components/n-dashboard/n-sys-setting-desc.vue'
+  import NEditPwd from '@/components/n-dashboard/n-edit-pwd.vue'
+  import NShoWebviews from '@/components/n-dashboard/n-show-webviews.vue'
+  import NAppNav from '@/components/n-dashboard/n-app-nav.vue'
+  import NSysSetting from '@/components/n-dashboard/n-sys-setting.vue'
+  import NSetting from '@/components/n-dashboard/n-setting.vue'
   import StatusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   import XtxTreeNode from '@/components/xtx-treeNode/xtx-treeNode.vue'
-  import StWebView from '@/components/st-web-nview.vue'
+  import StWebView from '@/components/st-web-nview.nvue'
 
   import orgsData from './orgs.js'
 
@@ -107,7 +108,7 @@
       setTimeout(() => {
         dom.getComponentRect("viewport", (option) => {
           console.log('view port', option)
-          this.wrapperHeight = option.size.height
+          this.wrapperHeight = option.size.height - 30
         })
         const result = dom.getComponentRect(this.$refs.box, (option) => {
           console.log("getComponentRect:", option);
@@ -119,13 +120,14 @@
     },
     data() {
       return {
+        showWebViews: true,
         activeWebView: {
-          id: 0,
-          url: 'https://www.cnblogs.com/heisetianshi/p/15573264.html'
+          // id: -1,
+          // url: 'https://www.cnblogs.com/heisetianshi/p/15573264.html'
         },
         webViews: [{
-          id: 0,
-          url: 'https://www.cnblogs.com/heisetianshi/p/15573264.html'
+          id: -1,
+          url: 'https://www.baidu.com'
         }],
         innerCompInSys: {
           component: 'NSysSettingSesc',
@@ -159,15 +161,16 @@
             label: 'apps',
             component: 'NAppNav',
             color: '#000',
-            size: 28,
+            size: 20,
           },
           {
             name: 'pushpin',
             title: '打开的应用',
             label: 'open-apps',
-            component: 'NShoWebviews',
+            // component: 'NShoWebviews',
+            component: '',
             color: '#000',
-            size: 28,
+            size: 20,
           },
           {
             name: 'setting',
@@ -175,7 +178,7 @@
             label: 'setting',
             component: 'NSysSetting',
             color: '#000',
-            size: 28,
+            size: 20,
           },
         ],
         show: false,
@@ -195,11 +198,15 @@
         })
       },
       setActiveWebview(data) {
-        console.log(data, '设置活跃webview')
-        this.webViews.push(data)
+        console.log('设置', this.webViews, data)
+        let hasV = this.webViews.find(view => view.id === data.id)
+        if (!hasV) {
+          this.webViews.push(data)
+        }
         this.activeWebView = Object.assign({}, this.activeWebView, data)
         this.$set(this.activeTab, 'openSetting', false)
         this.removeAsidetabColor()
+        console.log(data, '设置活跃webview', this.activeWebView)
       },
       editSysTitle(component) {
         console.log(component, 'component')
@@ -215,35 +222,26 @@
         this.$set(this.activeTab, 'openSetting', false)
         this.removeAsidetabColor()
       },
-      getSysInfo() {
-        console.log('this ')
-        let that = this;
-        uni.getSystemInfo({
-          success: function(res) {
-            console.log(1, res, 'res')
-
-            uni.createSelectorQuery().in(that).select('.sbad').boundingClientRect()
-              .exec(
-                data => {
-                  console.log(11111, 2222)
-                  console.log(res, data, 'res data')
-                  that.wrapperHeight = res.windowHeight
-                })
-          },
-          fail: function(err) {
-            console.log(err, 'err')
+      openActiveView(data) {
+        this.showWebViews = false
+        this.activeWebView = Object.assign({}, this.activeWebView, data)
+      },
+      toggleAsideTab(tab) {
+        if (tab.label === 'open-apps') {
+          // 展示所有的应用
+          if (!this.activeTab.openSetting) {
+            this.showWebViews = !this.showWebViews
           }
 
-        });
-      },
-
-      toggleAsideTab(tab) {
-        this.activeTab = Object.assign({}, this.activeTab, tab)
-        this.$set(this.activeTab, 'openSetting', true)
-        this.innerCompInSys = Object.assign({}, this.innerCompInSys, {
-          component: 'NSysSettingSesc',
-          title: ''
-        })
+          this.$set(this.activeTab, 'openSetting', false)
+        } else {
+          this.activeTab = Object.assign({}, this.activeTab, tab)
+          this.$set(this.activeTab, 'openSetting', true)
+          this.innerCompInSys = Object.assign({}, this.innerCompInSys, {
+            component: 'NSysSettingSesc',
+            title: ''
+          })
+        }
         this.asideTabs.forEach(item => {
           if (item.label === tab.label) {
             item.color = '#006aff'
@@ -281,8 +279,6 @@
     display: flex;
     flex-flow: column nowrap;
 
-
-
     // 顶部样式
     &-top {
       width: 750rpx;
@@ -304,10 +300,8 @@
     }
 
     &-title {
-      font-size: $basic-size;
       padding-left: 6rpx;
       color: #000;
-      // font-size: 2;
     }
 
     &-topright {
@@ -326,7 +320,6 @@
       align-items: center;
 
       &-title {
-        font-size: $basic-size;
         padding: 0 3rpx 0 6rpx;
       }
     }
@@ -356,32 +349,53 @@
     &-main {
       flex: 1;
       display: flex;
-      position: relative;
+
+      &-show {
+        flex: 1;
+        display: flex;
+        flex-flow: row wrap;
+      }
     }
 
     &-web-view {
-      flex: 0;
       display: flex;
+      flex: 0;
       color: red;
 
-      &-inner {
+      &-dective {
         flex: 0;
-        z-index: -10000;
+        height: 0;
       }
 
       &-active {
         flex: 1;
+        color: yellow;
+      }
+
+      &-show {
+        flex: 0;
+        width: 200rpx;
+        height: 150rpx;
+        color: blue;
+
+
       }
     }
 
     &-pop-setting {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background-color: #fff;
-      display: flex;
+      flex: 0;
+      height: 0;
+
+      &-show {
+        flex: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #fff;
+        display: flex;
+      }
     }
 
 
@@ -391,6 +405,7 @@
     // 弹窗样式
     &-popup {
       flex: 0;
+      height: 0;
 
       &-scroll {
         display: flex;

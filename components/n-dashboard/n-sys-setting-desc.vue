@@ -1,42 +1,51 @@
 <template>
   <scroll-view scroll-y="true" class="sitir-basic-app-dashboard-sys-setting-desc sbadssd">
-    <view class="sbadssd-personal">
-      <view class="sbadssd-personal-inner">
-        <text class="sbadssd-account-label font-size-base">当前账户:</text>
-        <text class="sbadssd-account font-size-base">000000000000</text>
-        <u-button class="sbadssd-edit-pwd" type="primary" @click="toggleEditPwd" text="修改密码"></u-button>
-        <u-button class="sbadssd-logout" type="error" @click="toggleEditPwd" text="登出"></u-button>
-      </view>
-      <view class="sbadssd-avatar">
-        <text class="sbadssd-avatar-label font-size-base">
-          选择头像
-        </text>
+    <u--form :borderBottom="false" class="sbadssd-personal" labelPosition="left" :labelWidth="132" labelAlign="right"
+      :model="model1" :rules="rules" ref="uForm">
+
+      <u-form-item label="当前账户:" prop="userInfo.name" ref="item1">
+        <view class="sbadssd-account">
+          <u--text class="sbadssd-account-name" text="000000000000"></u--text>
+          <u-button class="sbadssd-edit-pwd" size="small" type="primary" @click="toggleEditPwd" icon="edit-pen"
+            text="修改密码"></u-button>
+          <u-button class="sbadssd-logout" size="small" type="error" @click="logout" icon="lock-open"
+            text="登出"></u-button>
+        </view>
+      </u-form-item>
+      <u-form-item label="选择头像:" prop="userInfo.name" ref="item1">
         <u-avatar text="特" randomBgColor></u-avatar>
-      </view>
-    </view>
+      </u-form-item>
+    </u--form>
+
     <u-divider></u-divider>
     <u--form class="sbadssd-env" labelPosition="left" :labelWidth="132" labelAlign="right" :model="model1"
       :rules="rules" ref="uForm">
 
-      <u-form-item label="入口地址:" prop="userInfo.name" borderBottom ref="item1">
-        <u--input v-model="model1.userInfo.name"></u--input>
+      <u-form-item label="入口地址:" prop="userInfo.name" ref="item1">
+        <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item label="环境选择:" prop="userInfo.name" borderBottom ref="item1">
-        <u--input v-model="model1.userInfo.name"></u--input>
+      <u-form-item label="环境选择:" prop="userInfo.name" ref="item1">
+        <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item borderBottom ref="item1">
-        <u-button @click="editPwd" type="primary" text="切换"></u-button>
+      <u-form-item ref="item1">
+        <u-button @click="editPwd" size="small" type="primary" icon="hourglass-half-fill" text="切换"></u-button>
       </u-form-item>
     </u--form>
 
     <u-divider></u-divider>
 
-    <view class="sbadssd-about">
-      <text class=" font-size-base">当前版本</text>
-      <text class=" font-size-base">4.0.0</text>
-      <u-button text="检查更新"></u-button>
-    </view>
-    </view>
+
+    <u--form class="sbadssd-about" labelPosition="left" :labelWidth="132" labelAlign="right" :model="model1"
+      :rules="rules" ref="uForm">
+
+      <u-form-item label="当前版本:" prop="userInfo.name" ref="item1">
+        <view class="sbadssd-update">
+          <u--text class="sbadssd-version" text="4.0.0"></u--text>
+          <u-button size="small" icon="download" text="检查更新"></u-button>
+        </view>
+      </u-form-item>
+    </u--form>
+
   </scroll-view>
 </template>
 
@@ -121,7 +130,17 @@
       this.$refs.uForm.setRules(this.rules)
     },
     methods: {
-      toggleEditPwd() {},
+      logout() {
+        uni.redirectTo({
+          url: '/pages/n-login',
+          success() {
+            console.log('suc')
+          },
+          fail(e) {
+            console.log('fi', e)
+          }
+        })
+      },
       toggleEditPwd() {
         this.$emit('editTitle', 'NEditPwd')
       },
@@ -141,42 +160,21 @@
     flex-flow: column nowrap;
 
     // 个人信息
-    &-personal {
-      height: 24rpx;
-      display: flex;
-      flex-flow: column nowrap;
-
-      &-inner {
-        height: 24rpx;
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-      }
-    }
+    &-personal {}
 
     &-account {
-      margin-right: 6rpx;
+      display: flex;
+      flex-flow: row;
 
-      &-label {
-        margin-right: 6rpx;
-      }
+      &-name {}
     }
 
     &-edit-pwd {
-      margin-right: 6rpx;
+      margin: 0 6rpx 0 24rpx;
     }
 
-    &-logout {
-      margin-right: 6rpx;
-    }
+    &-logout {}
 
-    &-avatar {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-
-      &-label {}
-    }
 
     // 环境入口
     &-env {}
@@ -188,6 +186,21 @@
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
+    }
+
+    &-update {
+      display: flex;
+      flex-flow: row;
+
+      .u-text {}
+
+      .u-button {
+        margin: 0 0 0 6rpx;
+      }
+    }
+
+    &-version {
+      display: flex;
     }
 
     .u-divider {

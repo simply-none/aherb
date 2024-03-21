@@ -69,7 +69,7 @@
   }
 
   .open__and--close {
-    margin-left: auto;
+    // margin-left: auto;
     font-size: 12rpx;
   }
 

@@ -1,0 +1,104 @@
+<template>
+  <view :class="[show ? 'st-web-nview-show' : 'st-web-nview']">
+    <web-view class="st-web-nview-inner" ref="webview" :webview-styles="{
+      progress: {
+        color: '#eee'
+      }
+    }" :style="{
+    	}" :fullscreen='false' :src="webUrl.url" @onPostMessage="receiveMessage" @message="receiveMessage"></web-view>
+    <cover-view :class="[show ? 'st-web-nview-cover-show' : 'st-web-nview-cover']" @click.self="openActiveView">
+      <view class=" st-web-nview-cover-txt">
+        <text class="font-size-base">点击进入{{show}}</text>
+      </view>
+    </cover-view>
+  </view>
+</template>
+
+<script>
+  export default {
+    name: "st-web-nview",
+    props: {
+      show: {
+        type: Boolean,
+        default: () => false
+      },
+      webUrl: Object
+    },
+    data() {
+      return {
+
+      };
+    },
+    methods: {
+      openActiveView() {
+        this.$emit('openActiveView', this.webUrl)
+      },
+      // data: { type: 发送数据类型, payload: 数据体 }
+      sendMessage(data) {
+        try {
+          let transData = JSON.stringify(data)
+          // vue
+          // let currentWebView = this.$scope ? this.$scope.$getAppWebview() : this.$parent.$scope.$getAppWebview()
+          // let webView = currentWebView.children()[0]
+          // console.log(currentWebView)
+          // console.log(webView, 'webview')
+          // webView.evalJS(`setAccountInfo(${transData})`)
+          // nvue
+          this.$refs.webview.evalJS(`setAccountInfo(${transData})`)
+        } catch (err) {
+          console.log(err, 'err')
+        }
+      },
+      receiveMessage(evt) {
+        console.log('来自子页面的数据=', evt)
+        this.subData = evt.detail.data
+        this.$emit('receiveData', evt.detail.data)
+      },
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+  .st-web-nview {
+    position: relative;
+
+    &-show {
+      margin: 6rpx;
+    }
+
+    &-inner {
+      flex: 1;
+      position: relative;
+    }
+
+    &-cover {
+      flex: 0;
+      height: 0;
+
+      &-show {
+        flex: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #000;
+        opacity: 0.3;
+        display: flex;
+        z-index: 200000;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+
+      }
+
+      &-txt {
+        border: 2px solid;
+        border-radius: 5px;
+        color: blue;
+        opacity: 0;
+        background-color: #000;
+      }
+    }
+  }
+</style>
