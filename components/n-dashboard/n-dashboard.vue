@@ -38,8 +38,9 @@
           当前web-view对象，设置为活跃对象，同时将其flex设为1
           非活跃对象，将其flex设为0，不占据任何空间
          -->
-        <view>
-          <text>1</text>
+        <view :class="['sbad-web-view-add', showWebViews ? 'sbad-web-view-add-show' : 'sbad-web-view-add-dis']"
+          click="openApps">
+          <u--text class="sbad-web-view-add-txt" @click="openApps" text="+" size="36"></u--text>
         </view>
         <template v-for="webView in webViews">
           <st-web-view :key="webView.url" :show="showWebViews"
@@ -49,7 +50,7 @@
 
         <!-- 覆盖在web-view上的设置 -->
         <cover-view :class="[activeTab.openSetting ? 'sbad-pop-setting-show' : 'sbad-pop-setting']">
-          <n-setting :title="activeTab.title" @close='handleCloseSetting'>
+          <n-setting :tab="activeTab" @close='handleCloseSetting'>
             <component :apps="webViews" :is="activeTab.component" @setActiveWebview="setActiveWebview">
               <component :is="innerCompInSys.component" @editTitle="editSysTitle"></component>
             </component>
@@ -155,17 +156,21 @@
           openSetting: false,
         },
 
-        asideTabs: [{
-            name: 'list-dot',
-            title: '选择应用',
-            label: 'apps',
-            component: 'NAppNav',
-            color: '#000',
-            size: 20,
-          },
+        asideTabs: [
+
+          // {
+          //   name: 'list-dot',
+          //   title: '选择应用',
+          //   topTitle: '返回',
+          //   label: 'apps',
+          //   component: 'NAppNav',
+          //   color: '#000',
+          //   size: 20,
+          // },
           {
-            name: 'pushpin',
+            name: 'list-dot',
             title: '打开的应用',
+            topTitle: '返回',
             label: 'open-apps',
             // component: 'NShoWebviews',
             component: '',
@@ -175,6 +180,7 @@
           {
             name: 'setting',
             title: '设置',
+            topTitle: '返回',
             label: 'setting',
             component: 'NSysSetting',
             color: '#000',
@@ -225,6 +231,23 @@
       openActiveView(data) {
         this.showWebViews = false
         this.activeWebView = Object.assign({}, this.activeWebView, data)
+      },
+      openApps() {
+        console.log(Date.now())
+        this.activeTab = Object.assign({}, this.activeTab, {
+          name: 'list-dot',
+          title: '选择应用',
+          topTitle: '返回',
+          label: 'apps',
+          component: 'NAppNav',
+          color: '#000',
+          size: 20,
+        })
+        this.$set(this.activeTab, 'openSetting', true)
+        this.innerCompInSys = Object.assign({}, this.innerCompInSys, {
+          component: 'NSysSettingSesc',
+          title: ''
+        })
       },
       toggleAsideTab(tab) {
         if (tab.label === 'open-apps') {
@@ -362,6 +385,37 @@
       flex: 0;
       color: red;
 
+      &-add {
+        background-color: #b3b3b3;
+        margin: 6rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-txt {
+          // 遭遇view、text无法点击的情况，使用u--text后，将其padding设置最大，覆盖父容器即可全域点击
+          display: flex;
+          flex: 1;
+          padding: 700rpx;
+        }
+
+        &-show {
+          flex: 0;
+          width: 200rpx;
+          height: 150rpx;
+          color: green;
+        }
+
+        &-dis {
+          margin-top: 0;
+          margin-bottom: 0;
+          display: flex;
+          flex: 0;
+          height: 0;
+          color: orange;
+        }
+      }
+
       &-dective {
         flex: 0;
         height: 0;
@@ -377,8 +431,6 @@
         width: 200rpx;
         height: 150rpx;
         color: blue;
-
-
       }
     }
 
@@ -398,10 +450,6 @@
       }
     }
 
-
-
-
-
     // 弹窗样式
     &-popup {
       flex: 0;
@@ -413,7 +461,6 @@
       }
     }
 
-
     .u-divider {
       margin: 0;
     }
@@ -421,7 +468,6 @@
     &-divider {
       width: 1rpx;
       background-color: #dcdfe6;
-
     }
   }
 </style>

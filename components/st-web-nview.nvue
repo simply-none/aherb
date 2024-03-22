@@ -85,7 +85,7 @@
         background-color: #000;
         opacity: 0.3;
         display: flex;
-        z-index: 200000;
+        // z-index: 200000;
         overflow: hidden;
         justify-content: center;
         align-items: center;

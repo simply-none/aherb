@@ -65,7 +65,7 @@
 
       &-inner {
         flex: 0;
-        z-index: -10000;
+        // z-index: -10000;
       }
 
       &-active {

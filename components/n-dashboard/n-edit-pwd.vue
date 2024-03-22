@@ -1,8 +1,7 @@
 <template>
   <scroll-view scroll-y="true" class="sitir-basic-app-dashboard-edit-pwd sbadep">
     <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
-    <u--form labelPosition="left" :labelWidth="132" labelAlign="right" :model="model1" :rules="rules" ref="uForm"
-      class="sbadep-form">
+    <u--form labelPosition="left" :labelWidth="60" :model="model1" :rules="rules" ref="uForm" class="sbadep-form">
 
       <u-form-item label="当前账户:" ref="item1">
         <u--text class="sbadssd-account-name" text="000000000000"></u--text>
@@ -13,7 +12,7 @@
       <u-form-item label="新密码:" prop="userInfo.name" ref="item1">
         <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item label="再次输入新密码:" prop="userInfo.name" ref="item1">
+      <u-form-item label="确认密码:" prop="userInfo.name" ref="item1">
         <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
       <u-form-item ref="item1">

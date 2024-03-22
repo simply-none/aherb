@@ -3,7 +3,7 @@
     <u--form :borderBottom="false" class="sbadssd-personal" labelPosition="left" :labelWidth="132" labelAlign="right"
       :model="model1" :rules="rules" ref="uForm">
 
-      <u-form-item label="当前账户:" prop="userInfo.name" ref="item1">
+      <u-form-item label="当前账户:" :labelWidth="60" prop="userInfo.name" ref="item1">
         <view class="sbadssd-account">
           <u--text class="sbadssd-account-name" text="000000000000"></u--text>
           <u-button class="sbadssd-edit-pwd" size="small" type="primary" @click="toggleEditPwd" icon="edit-pen"
@@ -18,8 +18,8 @@
     </u--form>
 
     <u-divider></u-divider>
-    <u--form class="sbadssd-env" labelPosition="left" :labelWidth="132" labelAlign="right" :model="model1"
-      :rules="rules" ref="uForm">
+    <u--form class="sbadssd-env" labelPosition="left" :labelWidth="60" labelAlign="right" :model="model1" :rules="rules"
+      ref="uForm">
 
       <u-form-item label="入口地址:" prop="userInfo.name" ref="item1">
         <u--input border="surround" v-model="model1.userInfo.name"></u--input>
@@ -35,7 +35,7 @@
     <u-divider></u-divider>
 
 
-    <u--form class="sbadssd-about" labelPosition="left" :labelWidth="132" labelAlign="right" :model="model1"
+    <u--form class="sbadssd-about" labelPosition="left" :labelWidth="60" labelAlign="right" :model="model1"
       :rules="rules" ref="uForm">
 
       <u-form-item label="当前版本:" prop="userInfo.name" ref="item1">

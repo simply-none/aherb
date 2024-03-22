@@ -3,12 +3,14 @@
     <view class="sbads-top">
       <view class="sbads-top-title">
         <text class=" font-size-base">
-          {{ title }}
+          {{ tab.title }}
         </text>
       </view>
       <view class="sbads-top-right" @click="closeSetting">
         <u-icon name="arrow-left-double"></u-icon>
-        <text class="sbads-top-label font-size-base">设置</text>
+        <text class="sbads-top-label font-size-base">
+          {{ tab.topTitle }}
+        </text>
       </view>
     </view>
     <view class="sbads-body">
@@ -20,9 +22,9 @@
 <script>
   export default {
     props: {
-      title: {
-        type: String,
-        default: () => '',
+      tab: {
+        type: Object,
+        default: () => ({}),
       },
     },
     data() {
