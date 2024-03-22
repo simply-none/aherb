@@ -1,20 +1,8 @@
-# leo-tree
-#### props
-#### data 数据源
-#### defaultProps 配置选项，return { id: 'id', label: 'label', children: 'children' }
-#### emit 
-#### node-click 监听选中变化，返回选中的数据
+> 开发环境：     
+> 
+> HBuilder x: 3.8.12        
+> node: 16.20.0     
+> npm: 8.19.4         
+> os: Windows 10 家庭版 22H2 19045.3324
 
 
-### 使用
-#### 本组件符合easycom规范，HBuilderX 2.5.5起，只需将本组件导入项目，在页面template中即可直接使用，无需在页面中import和注册components。
-```javascript
-	template
-	<leo-tree :data="data" @node-click="nodeClick"></leo-tree>
-	
-	methods
-	nodeClick(e) {
-		console.log('点击的项目', e);
-	}
-	
-```
