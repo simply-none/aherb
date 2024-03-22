@@ -1,13 +1,13 @@
 <template>
-  <view :class="[show ? 'st-web-nview-show' : 'st-web-nview']">
-    <web-view class="st-web-nview-inner" ref="webview" :webview-styles="{
+  <view :class="[show ? 'n-web-nview-show' : 'n-web-nview']">
+    <web-view class="n-web-nview-inner" ref="webview" :webview-styles="{
       progress: {
         color: '#eee'
       }
     }" :style="{
     	}" :fullscreen='false' :src="webUrl.url" @onPostMessage="receiveMessage" @message="receiveMessage"></web-view>
-    <cover-view :class="[show ? 'st-web-nview-cover-show' : 'st-web-nview-cover']" @click.self="openActiveView">
-      <view class=" st-web-nview-cover-txt">
+    <cover-view :class="[show ? 'n-web-nview-cover-show' : 'n-web-nview-cover']" @click.self="openActiveView">
+      <view class=" n-web-nview-cover-txt">
         <text class="font-size-base">点击进入{{show}}</text>
       </view>
     </cover-view>
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    name: "st-web-nview",
+    name: "n-web-nview",
     props: {
       show: {
         type: Boolean,
@@ -59,7 +59,7 @@
 </script>
 
 <style scoped lang="scss">
-  .st-web-nview {
+  .n-web-nview {
     position: relative;
 
     &-show {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import StWebView from '@/components/st-web-nview.nvue'
+  import StWebView from '@/components/n-web-nview.nvue'
   export default {
     components: {
       StWebView,

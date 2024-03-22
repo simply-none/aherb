@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import StWebView from '../../components/st-web-view.vue'
+  import StWebView from '@/components/st-web-view.vue'
   export default {
     components: {
       StWebView
