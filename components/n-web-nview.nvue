@@ -1,15 +1,18 @@
 <template>
   <view :class="[show ? 'n-web-nview-show' : 'n-web-nview']">
-    <web-view class="n-web-nview-inner" ref="webview" :webview-styles="{
-      progress: {
-        color: '#eee'
-      }
-    }" :style="{
-    	}" :fullscreen='false' :src="webUrl.url" @onPostMessage="receiveMessage" @message="receiveMessage"></web-view>
-    <cover-view :class="[show ? 'n-web-nview-cover-show' : 'n-web-nview-cover']" @click.self="openActiveView">
-      <view class=" n-web-nview-cover-txt">
-        <text class="font-size-base">点击进入{{show}}</text>
-      </view>
+    <view :class="[show ? 'n-web-nview-title-show' : 'n-web-nview-title']">
+      <text class="font-size-base">{{ webUrl.name || '应用名称' }}</text>
+    </view>
+    <cover-view class="n-web-nview-wrapper">
+
+      <web-view class="n-web-nview-inner" ref="webview" :webview-styles="{
+        progress: {
+          color: '#eee'
+        },
+      }" :style="{
+      	}" :fullscreen='false' :src="webUrl.url" @onPostMessage="receiveMessage" @message="receiveMessage"></web-view>
+      <cover-view :class="[show ? 'n-web-nview-cover-show' : 'n-web-nview-cover']" @click.self="openActiveView">
+      </cover-view>
     </cover-view>
   </view>
 </template>
@@ -61,15 +64,34 @@
 <style scoped lang="scss">
   .n-web-nview {
     position: relative;
+    height: 300rpx;
 
     &-show {
       margin: 6rpx;
     }
 
+    &-wrapper {
+      display: flex;
+      flex: 1;
+    }
+
     &-inner {
       flex: 1;
       position: relative;
+      height: 200rpx;
     }
+
+    &-title {
+      height: 0;
+
+      &-show {
+        height: 20rpx;
+        line-height: 20rpx;
+        // padding: 6px 0;
+      }
+    }
+
+
 
     &-cover {
       flex: 0;
@@ -84,21 +106,12 @@
         right: 0;
         background-color: #000;
         opacity: 0.3;
-        display: flex;
-        // z-index: 200000;
         overflow: hidden;
         justify-content: center;
         align-items: center;
 
       }
-
-      &-txt {
-        border: 2px solid;
-        border-radius: 5px;
-        color: blue;
-        opacity: 0;
-        background-color: #000;
-      }
     }
+
   }
 </style>

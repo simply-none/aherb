@@ -56,6 +56,7 @@
       setActiveWebview(app) {
         this.$emit('setActiveWebview', {
           id: app,
+          name: '名字：' + app,
           url: 'https://www.baidu.com/s?wd=' + app
         })
       },

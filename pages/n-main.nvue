@@ -38,9 +38,14 @@
           当前web-view对象，设置为活跃对象，同时将其flex设为1
           非活跃对象，将其flex设为0，不占据任何空间
          -->
-        <view :class="['sbad-web-view-add', showWebViews ? 'sbad-web-view-add-show' : 'sbad-web-view-add-dis']"
-          click="openApps">
-          <u--text class="sbad-web-view-add-txt" @click="openApps" text="+" size="36"></u--text>
+        <view :class="['sbad-web-view-add', showWebViews ? 'sbad-web-view-add-show' : 'sbad-web-view-add-dis']">
+          <view :class="[showWebViews ? 'sbad-web-view-add-title-show' : 'sbad-web-view-add-title']">
+            <text class="font-size-base"></text>
+          </view>
+          <view :class="['sbad-web-view-add-inner']" @click="openApps">
+            <u--text class="sbad-web-view-add-txt" text="+" size="36"></u--text>
+          </view>
+
         </view>
         <template v-for="webView in webViews">
           <st-web-view :key="webView.url" :show="showWebViews"
@@ -48,12 +53,29 @@
             :web-url="webView" @openActiveView="openActiveView"></st-web-view>
         </template>
 
+
         <!-- 覆盖在web-view上的设置 -->
         <cover-view :class="[activeTab.openSetting ? 'sbad-pop-setting-show' : 'sbad-pop-setting']">
-          <n-setting :tab="activeTab" @close='handleCloseSetting'>
-            <component :apps="webViews" :is="activeTab.component" @setActiveWebview="setActiveWebview">
-              <component :is="innerCompInSys.component" @editTitle="editSysTitle"></component>
-            </component>
+          <n-setting :render-whole="true" :tab="activeTab" @close='handleCloseSetting'>
+            <NSysSetting :render-whole="true" :apps="webViews" :is="activeTab.component"
+              @setActiveWebview="setActiveWebview">
+              <!-- <NEditPwd
+                :class="[innerCompInSys.component === 'NEditPwd' ? 'sbad-pop-setting-innerComp-show' : 'sbad-pop-setting-innerComp']"
+                :render-whole="true" :is="innerCompInSys.component" @editTitle="editSysTitle"></NEditPwd>
+              <NSysSettingSesc
+                :class="[innerCompInSys.component === 'NEditPwd' ? 'sbad-pop-setting-innerComp-show' : 'sbad-pop-setting-innerComp']"
+                :render-whole="true" :is="innerCompInSys.component" @editTitle="editSysTitle">
+              </NSysSettingSesc> -->
+              <component :render-whole="true" :is="innerCompInSys.component" @editTitle="editSysTitle"></component>
+            </NSysSetting>
+
+
+
+
+            <!-- <component :render-whole="true" :apps="webViews" :is="activeTab.component"
+              @setActiveWebview="setActiveWebview">
+              <component :render-whole="true" :is="innerCompInSys.component" @editTitle="editSysTitle"></component>
+            </component> -->
           </n-setting>
         </cover-view>
         <!-- 展示应用 -->
@@ -386,23 +408,35 @@
       color: red;
 
       &-add {
-        background-color: #b3b3b3;
+
         margin: 6rpx;
         display: flex;
-        justify-content: center;
-        align-items: center;
+
+        &-inner {
+          background-color: #b3b3b3;
+          display: flex;
+          flex: 1;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &-title {
+          &-show {
+            height: 20rpx;
+            line-height: 20rpx;
+          }
+        }
 
         &-txt {
           // 遭遇view、text无法点击的情况，使用u--text后，将其padding设置最大，覆盖父容器即可全域点击
           display: flex;
           flex: 1;
-          padding: 700rpx;
         }
 
         &-show {
           flex: 0;
           width: 200rpx;
-          height: 150rpx;
+          height: 200rpx;
           color: green;
         }
 
@@ -429,7 +463,7 @@
       &-show {
         flex: 0;
         width: 200rpx;
-        height: 150rpx;
+        height: 200rpx;
         color: blue;
       }
     }
@@ -447,6 +481,10 @@
         right: 0;
         background-color: #fff;
         display: flex;
+      }
+
+      &-innerComp {
+        height: 0;
       }
     }
 

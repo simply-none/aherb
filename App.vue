@@ -4,6 +4,16 @@
       console.log('App Launch')
     },
     onShow: function() {
+      // #ifdef APP-PLUS
+      //设置3秒后主动关闭
+      try {
+        setTimeout(() => {
+          plus.navigator.closeSplashscreen();
+        }, 1000);
+      } catch (e) {
+        console.log(e)
+      }
+      // #endif
       console.log('App Show')
     },
     onHide: function() {

@@ -12,7 +12,7 @@
             text="登出"></u-button>
         </view>
       </u-form-item>
-      <u-form-item label="选择头像:" prop="userInfo.name" ref="item1">
+      <u-form-item label="选择头像:" :labelWidth="60" prop="userInfo.name" ref="item1">
         <u-avatar text="特" randomBgColor></u-avatar>
       </u-form-item>
     </u--form>
@@ -21,13 +21,13 @@
     <u--form class="sbadssd-env" labelPosition="left" :labelWidth="60" labelAlign="right" :model="model1" :rules="rules"
       ref="uForm">
 
-      <u-form-item label="入口地址:" prop="userInfo.name" ref="item1">
+      <u-form-item label="入口地址:" :labelWidth="60" prop="userInfo.name" ref="item1">
         <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item label="环境选择:" prop="userInfo.name" ref="item1">
+      <u-form-item label="环境选择:" :labelWidth="60" prop="userInfo.name" ref="item1">
         <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
-      <u-form-item ref="item1">
+      <u-form-item :labelWidth="60" ref="item1">
         <u-button @click="editPwd" size="small" type="primary" icon="hourglass-half-fill" text="切换"></u-button>
       </u-form-item>
     </u--form>

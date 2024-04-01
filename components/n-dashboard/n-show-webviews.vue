@@ -1,7 +1,7 @@
 <template>
   <view class="sitir-basic-app-dashboard-show-apps sbadsa">
     <text class=" font-size-base">展示所有打开应用</text>
-    <view v-for="app in apps">
+    <view v-for="app in apps" :key="app">
       <text class="font-size-base">{{ app.url }}</text>
     </view>
     <view class="sbadsa-body">
@@ -60,7 +60,7 @@
     &-web-view {
       display: flex;
       width: 250rpx;
-      height: 200rpx;
+      // height: 200rpx;
       color: red;
 
       &-inner {
