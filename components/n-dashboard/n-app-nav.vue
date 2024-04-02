@@ -1,7 +1,7 @@
 <template>
   <view class="sitir-basic-app-dashboard-app-nav sbadan">
     <scroll-view scroll-y="true" class="sbadan-sys">
-      <block v-for="i in 50" :key="i">
+      <block v-for="i in 20" :key="i">
         <view class="sbadan-sys-inner">
           <u-icon name="grid"></u-icon>
           <text class="sbadan-sys-item font-size-base">
@@ -13,7 +13,7 @@
     </scroll-view>
     <view class="sbadan-divider"></view>
     <scroll-view scroll-y="true" class="sbadan-domain">
-      <block v-for="i in 50" :key="i">
+      <block v-for="i in 20" :key="i">
         <view class="sbadan-sys-inner">
           <u-icon name="car"></u-icon>
           <text class="sbadan-domain-item font-size-base">
@@ -41,12 +41,6 @@
 
 <script>
   export default {
-    props: {
-      show: {
-        type: Boolean,
-        default: false,
-      },
-    },
     data() {
       return {
 
@@ -56,14 +50,10 @@
       setActiveWebview(app) {
         this.$emit('setActiveWebview', {
           id: app,
-          name: '名字：' + app,
+          name: '应用名字：' + app,
           url: 'https://www.baidu.com/s?wd=' + app
         })
       },
-      closeSetting() {
-        console.log('close')
-        this.$emit('close')
-      }
     }
   }
 </script>

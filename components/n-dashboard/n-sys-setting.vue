@@ -1,6 +1,6 @@
 <template>
   <view class="sitir-basic-app-dashboard-sys-setting sbadss">
-    <view class="sbadss-sys">
+    <view class="sbadss-sys" @click="onlyEmitInThis">
       <block v-for="tab in tabs" :key="tab.name">
         <view class="sbadss-sys-inner">
           <u-icon :name="tab.name"></u-icon>
@@ -20,12 +20,6 @@
 
 <script>
   export default {
-    props: {
-      show: {
-        type: Boolean,
-        default: false,
-      },
-    },
     data() {
       return {
         activeTab: {
@@ -61,10 +55,11 @@
       };
     },
     methods: {
-      closeSetting() {
-        console.log('close')
-        this.$emit('close')
-      }
+      // 由于使用上下文层叠，在点击上层时，会触发下层的点击事件
+      // 故而，在点击上层时，拦截该事件，即在上层点击做一个事件处理，即使什么也没有
+      onlyEmitInThis(e) {
+        console.log(e)
+      },
     }
   }
 </script>

@@ -34,6 +34,7 @@
     },
     methods: {
       openActiveView() {
+        console.log('hhhhhhhhhh')
         this.$emit('openActiveView', this.webUrl)
       },
       // data: { type: 发送数据类型, payload: 数据体 }
