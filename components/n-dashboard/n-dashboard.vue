@@ -8,41 +8,25 @@
         <u-image class="sbad-image" src="@/static/sitir_logo.jpg" mode="aspectFit"></u-image>
         <text class="sbad-title font-size-base">四特酒聚合平台客户端</text>
       </view>
-      <view class="sbad-topright">
-        <view class="sbad-avatar"><u-avatar size="28" text="特" randomBgColor></u-avatar></view>
-        <view class="sbad-org" @click="handleSelectOrgDialog(true)">
-          <text class="sbad-org-title font-size-base">
-            {{selectOrg.orgName || '选择组织' }}
-          </text>
-          <u-icon name="arrow-down"></u-icon>
-        </view>
-      </view>
+      <!-- 顶部导航条-右侧内容 -->
+      <slot name="topright"></slot>
     </view>
     <u-divider></u-divider>
     <view class="sbad-body">
       <view class="sbad-aside">
         <block v-for="(tab) in asideTabs" :key="tab.name">
           <view class="sbad-aside-item">
-            <u-icon :name="tab.icon" :color="tab.color" :size="tab.size" @click="toggleAsideTab(tab)"
+            <u-icon :name="tab.icon" :color="tab.color" :size="tab.size" @click="toggleAsideTab(tab.type, tab)"
               :bold="true"></u-icon>
           </view>
         </block>
-
       </view>
       <view class="sbad-divider"></view>
 
-      <!-- 窗口内容主体 -->
+      <!-- 窗口内容-窗口主体 -->
       <slot name="body" :showSetting="activeTab.showSetting" :showWebviews="activeTab.showWebviews"
         :activeTabComponent="activeTab.component" :onHandleData="onHandleData"></slot>
     </view>
-    <u-popup :safeAreaInsetTop="true" class="sbad-popup" :show="show" mode="right"
-      @close="handleSelectOrgDialog(false)">
-      <scroll-view scroll-y="true">
-        <view class="sbad-popup-scroll">
-          <xtx-treeNode :list="orgs" @change="change"></xtx-treeNode>
-        </view>
-      </scroll-view>
-    </u-popup>
   </view>
 </template>
 
@@ -50,27 +34,18 @@
   import StatusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
   import XtxTreeNode from '@/components/xtx-treeNode/xtx-treeNode.vue'
 
-  import orgsData from '@/components/n-dashboard/orgs.js'
-
   // #ifdef APP-NVUE
   const dom = weex.requireModule("dom");
   console.log(dom, 'dom')
   // #endif
   export default {
-    props: {
-      showWebViews: Boolean,
-      // activeTab: Object,
-    },
     components: {
       StatusBar,
       XtxTreeNode
     },
     mounted() {
-      this.orgs = orgsData
-      this.dealObjectValue(this.orgs)
       setTimeout(() => {
         dom.getComponentRect("viewport", (option) => {
-          console.log('view port', option)
           this.wrapperHeight = option.size.height - 30
         })
       }, 100);
@@ -84,17 +59,19 @@
           showWebviews: true,
         },
         asideTabs: [{
+            type: 'webviewSelf',
             icon: 'list-dot',
             title: '打开的应用',
             topTitle: '返回',
             name: 'apps-nav',
-            // component: 'NShoWebviews',
-            component: 'show-webview-list',
+            component: 'show-webview',
+            showWebviews: false,
             color: '#000',
             size: 20,
             showSetting: false,
           },
           {
+            type: 'tab',
             icon: 'setting',
             title: '设置',
             topTitle: '返回',
@@ -106,8 +83,6 @@
           },
         ],
         show: false,
-        selectOrg: {},
-        orgs: [],
         wrapperHeight: null,
       }
     },
@@ -123,72 +98,67 @@
     },
     methods: {
       onHandleData(payload) {
-        console.log('active tab')
         if (payload.type === 'setTab') {
-          this.activeTab = Object.assign({}, this.activeTab, payload.data)
+          this.toggleAsideTab(payload.subType, payload.data)
         }
-        console.table(this.activeTab)
+        console.table(payload.subType, this.activeTab)
       },
       removeAsidetabColor() {
         this.asideTabs.forEach(item => {
           item.color = '#000'
         })
       },
-      toggleAsideTab(tab) {
-        let component = {
-
+      toggleAsideTab(type, tab) {
+        let component = {}
+        console.error(type, JSON.stringify(this.activeTab))
+        switch (type) {
+          case 'clickAdd':
+            break
+          case 'tab':
+            break
+          case 'smallAppAndAppNavs':
+            component = {
+              component: 'show-webview',
+              showWebviews: false,
+              showSetting: false,
+            }
+            break;
+          case 'webviewSelf':
+            let con = (!this.activeTab.component.includes('show-webview') && !this
+              .activeTab.showWebviews) || (this.activeTab.component.includes('show-webview-list') && this
+              .activeTab
+              .showWebviews)
+            component = {
+              component: con ? 'show-webview' : 'show-webview-list',
+              showWebviews: con ? false : true,
+            }
+            break
+          case 'otherToTabViews':
+            let con2 = this.activeTab.showWebviews === true
+            component = {
+              component: con2 ? 'show-webview-list' : 'show-webview',
+              showWebviews: con2 ? true : false,
+              showSetting: false,
+            }
+            break
+          default:
+            throw new Error('未知的新类型：该类型确保已经处理完showWebviews和showSetting两个属性')
         }
-        console.error(tab.name, this.activeTab.name, this.activeTab.component, 'show-webview-list')
 
-        if (tab.name === this.activeTab.name && this.activeTab.name === 'apps-nav' && this.activeTab.component ===
-          'show-webview-list') {
-          console.log('1')
-          component = {
-            component: 'show-webview',
-            showWebviews: false,
-            showSetting: false,
-          }
-        } else if (tab.name === this.activeTab.name && this.activeTab.name === 'apps-nav' && this.activeTab
-          .component === 'show-webview') {
-          console.log('2')
-          component = {
-            component: 'show-webview-list',
-            showWebviews: true,
-            showSetting: false,
-          }
-        } else {
-          console.log('3')
-        }
         this.activeTab = Object.assign({}, this.activeTab, {
           ...tab,
           ...component
         })
-        console.log(tab.name, '切换tab', this.activeTab, )
 
         this.asideTabs.forEach(item => {
-          if (item.name === tab.name) {
+          if (item.component === tab.component) {
             item.color = '#006aff'
           } else {
             item.color = '#000'
-
           }
         })
+        console.log(this.activeTab.component, 'latest')
       },
-      change(org) {
-        console.log(org, 'org')
-        this.handleSelectOrgDialog(false)
-        this.selectOrg = org
-      },
-      dealObjectValue(data) {
-        data.forEach(item => {
-          item.isOpen = true
-          if (item.children)
-            this.dealObjectValue(item.children)
-        })
-      },
-      handleSelectOrgDialog(flag) {
-        this.show = flag
-      }
     }
 
   }
@@ -226,27 +196,6 @@
       color: #000;
     }
 
-    &-topright {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-end;
-      align-items: center;
-      flex: 1;
-    }
-
-    &-avatar {}
-
-    &-org {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-
-      &-title {
-        padding: 0 3rpx 0 6rpx;
-      }
-    }
-
-
     // 主体样式
     &-body {
       flex: 1;
@@ -264,17 +213,6 @@
 
       &-item {
         margin-top: 12px;
-      }
-    }
-
-    // 弹窗样式
-    &-popup {
-      flex: 0;
-      height: 0;
-
-      &-scroll {
-        display: flex;
-        flex-flow: column nowrap;
       }
     }
 

@@ -28,7 +28,7 @@
         <u--input border="surround" v-model="model1.userInfo.name"></u--input>
       </u-form-item>
       <u-form-item :labelWidth="60" ref="item1">
-        <u-button @click="editPwd" size="small" type="primary" icon="hourglass-half-fill" text="切换"></u-button>
+        <u-button @click="onToggleEnv" size="small" type="primary" icon="hourglass-half-fill" text="切换"></u-button>
       </u-form-item>
     </u--form>
 
@@ -41,7 +41,7 @@
       <u-form-item label="当前版本:" prop="userInfo.name" ref="item1">
         <view class="sbadssd-update">
           <u--text class="sbadssd-version" text="4.0.0"></u--text>
-          <u-button size="small" icon="download" text="检查更新"></u-button>
+          <u-button size="small" icon="download" text="检查更新" @click="onCheckUpdate"></u-button>
         </view>
       </u-form-item>
     </u--form>
@@ -130,6 +130,50 @@
       this.$refs.uForm.setRules(this.rules)
     },
     methods: {
+      onToggleEnv() {
+        // 获取导航信息
+        uni.showToast({
+          icon: 'info',
+          title: '环境切换成功'
+        })
+      },
+      onCheckUpdate() {
+        plus.runtime.getProperty(plus.runtime.appid, (info) => {
+          uni.request({
+            url: 'http://free.sitejiu.com:8088/repository/apps/main.json',
+            sslVerify: false
+          }).then(res => {
+            console.log(res, info.version, res[1].data.client.android.version)
+            if (info.version < res[1].data.client.android.version) {
+              uni.downloadFile({
+                url: res[1].data.client.android.uri,
+                success(data) {
+                  if (data.statusCode === 200) {
+                    uni.showLoading({
+                      title: '下载中'
+                    })
+                    setTimeout(function() {
+                      plus.runtime.install(data.tempFilePath)
+                      uni.hideLoading()
+                    }, 3000)
+                  } else {
+                    uni.showToast({
+                      icon: 'error',
+                      title: '更新失败'
+                    })
+                  }
+                }
+              })
+            } else {
+              uni.showToast({
+                icon: 'info',
+                title: '暂无新版本'
+              })
+            }
+          })
+        })
+
+      },
       logout() {
         uni.redirectTo({
           url: '/pages/n-login',

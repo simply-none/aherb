@@ -1,5 +1,8 @@
 <template>
   <NDashboard>
+    <template v-slot:topright>
+      <NDashboardSelectOrg></NDashboardSelectOrg>
+    </template>
     <template v-slot:body="{showSetting, showWebviews, onHandleData, activeTabComponent}">
       <scroll-view scroll-y="true" :class="[showWebviews ? 'sbad-main-show' : 'sbad-main']">
 
@@ -24,7 +27,8 @@
             :class="['sbad-web-view', activeWebView.id === webView.id ? 'sbad-web-view-active' : 'sbad-web-view-dective', showWebviews ? 'sbad-web-view-show' : '']"
             :web-url="webView" @openActiveView="(data) => {
               openActiveView(data, onHandleData)
-            }"></st-web-view>
+            }">
+          </st-web-view>
         </template>
         <!-- 覆盖在web-view上的设置 -->
         <n-setting :render-whole="true" :innerCompInSys="innerCompInSys" :componentName="activeTabComponent"
@@ -43,6 +47,7 @@
 <script>
   import NDashboard from '@/components/n-dashboard/n-dashboard.vue'
   import NSetting from '@/components/n-dashboard/n-setting.vue'
+  import NDashboardSelectOrg from '@/components/n-dashboard/n-dashboard-select-org.vue'
   import StWebView from '@/components/n-web-nview.nvue'
 
   import orgsData from '@/components/n-dashboard/orgs.js'
@@ -54,6 +59,7 @@
   export default {
     components: {
       NDashboard,
+      NDashboardSelectOrg,
       NSetting,
       StWebView,
     },
@@ -97,19 +103,22 @@
       }
     },
     methods: {
+      // 点击app-navs
       setActiveWebview(data, onHandleData) {
         console.log('设置', this.webViews, data)
         let hasV = this.webViews.find(view => view.id === data.id)
         if (!hasV) {
           this.webViews.push(data)
         }
+        // 代码的先后顺序可能会让某个代码失效，比如下面这两个
         this.activeWebView = Object.assign({}, this.activeWebView, data)
         onHandleData({
           type: 'setTab',
+          subType: 'smallAppAndAppNavs',
           data: {
             component: 'show-webview',
+            showWebviews: false,
             showSetting: false,
-            showWebviews: false
           }
         })
 
@@ -124,36 +133,36 @@
         console.log(curComp, 'curcpme')
         this.innerCompInSys = Object.assign({}, this.innerCompInSys, curComp)
       },
+      // 点击设置中的返回按钮
       handleCloseSetting(date, onHandleData) {
         console.log('获取', arguments)
         onHandleData({
           type: 'setTab',
+          subType: 'otherToTabViews',
           data: {
-            component: 'show-webview',
             showSetting: false,
           }
         })
       },
+      // 点击app缩略表的某个app
       openActiveView(data, onHandleData) {
         console.log('hhhhhh')
+        this.activeWebView = Object.assign({}, this.activeWebView, data)
         // 传递给dashboard
         onHandleData({
           type: 'setTab',
-          data: {
-            component: 'show-webview',
-            showSetting: false,
-            showWebviews: false
-          }
+          subType: 'smallAppAndAppNavs',
+          data: {}
         })
-        this.activeWebView = Object.assign({}, this.activeWebView, data)
       },
+      // 点击+
       openApps(data, onHandleData) {
         console.log('hhhhh')
         onHandleData({
           type: 'setTab',
+          subType: 'clickAdd',
           data: {
             component: 'NAppNav',
-            showWebviews: false,
             showSetting: true,
           }
         })
@@ -169,6 +178,8 @@
 
 <style scoped lang="scss">
   $widthOrHeight: 36rpx;
+
+  $delayTime: 0.5s;
 
   .sbad {
 

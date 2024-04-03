@@ -13,17 +13,18 @@
         </view>
       </view>
 
-      <u--form labelPosition="top" :labelWidth="146" labelAlign="right" :model="model1" :rules="rules" ref="uForm"
+      <u--form labelPosition="top" :labelWidth="146" labelAlign="right" :model="envInfo" :rules="rules" ref="uForm"
         class="sbae-form">
 
-        <u-form-item label="入口地址:" prop="userInfo.name" ref="item1">
-          <u--input border="surround" v-model="model1.userInfo.name"></u--input>
+        <u-form-item label="入口地址:" prop="envInfo.entry" ref="item1">
+          <u--input border="surround" v-model="envInfo.entry"></u--input>
         </u-form-item>
-        <u-form-item label="环境选择:" prop="userInfo.name" ref="item1">
-          <u--input border="surround" v-model="model1.userInfo.name"></u--input>
+        <u-form-item label="环境选择:" prop="envInfo.title" ref="item1">
+          <view class="sbae-select-env" @click="openEnvSelectDialog(true)">
+            <u--text size="12" class="sbae-logo-title" :text="envInfo.title"></u--text>
+          </view>
+
         </u-form-item>
-
-
         <u-form-item ref="item1">
           <view class="sbae-login-btn">
             <u-button class="sbae-login-btn-inner" size="small" @click="setEnv" type="primary" text="选择"></u-button>
@@ -32,44 +33,95 @@
       </u--form>
 
     </view>
+    <u-picker :show="show" title="选择环境" :columns="columns" keyName="text" @close="closeEnvSelect"
+      @confirm="selectEnv"></u-picker>
 
   </view>
 </template>
 
 <script>
   import StatusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue'
+
   export default {
     components: {
       StatusBar
     },
     data() {
       return {
+        show: false,
+        selectUrl: '',
+        columns: [
+          [{
+              url: 'http://sommelier.pro2.pro-plat-3.ant.ac.sitejiu.local/sitir-sommelier-service',
+              text: "生产环境"
+            },
+            {
+              url: 'http://gateway.dev0.plat5.ant.magicsmithy.sitir.net',
+              text: "测试环境"
+            },
+          ]
+        ],
         curYear: (new Date()).getFullYear(),
-        model1: {
-          userInfo: {
-            name: 'uView UI',
-            sex: '',
-          },
+        envInfo: {
+          entry: 'https://www.baidu.com',
+          title: '请选择（默认第一个环境）',
+          url: '',
         },
         rules: {
-          'userInfo.name': {
+          'envInfo.entry': {
             type: 'string',
             required: true,
-            message: '请填写姓名',
+            message: '请填写环境入口地址',
             trigger: ['blur', 'change']
           },
-          'userInfo.sex': {
+          'envInfo.title': {
             type: 'string',
             max: 1,
             required: true,
-            message: '请选择男或女',
+            message: '请选择登入环境',
             trigger: ['blur', 'change']
           },
         },
       }
     },
+
+
     methods: {
+      selectEnv({
+        value
+      }) {
+        console.log(value[0])
+        this.envInfo.url = value[0].url
+        this.envInfo.title = value[0].text
+        this.show = false
+      },
+      closeEnvSelect() {
+        this.show = false
+      },
+      openEnvSelectDialog(show) {
+        this.show = show
+      },
+      setTripType(e) {
+        console.log(e, 'e')
+        let value = e.data.type_id;
+      },
       setEnv() {
+        uni.setStorage({
+          data: this.envInfo,
+          key: 'envInfo',
+          success(data) {
+            console.log(data, 'data')
+            uni.navigateBack({
+              url: '/pages/n-login',
+              success() {
+                console.log('suc')
+              },
+              fail(e) {
+                console.log('fi', e)
+              }
+            })
+          }
+        })
         uni.navigateBack({
           url: '/pages/n-login',
           success() {
@@ -110,8 +162,6 @@
       }
 
     }
-
-
 
     // 表单
 
@@ -171,6 +221,21 @@
       margin: 100rpx 0;
       background-color: #dcdfe6;
 
+    }
+
+    &-select-env {
+      border: 0.5rpx solid #dadbde;
+      border-radius: 4px;
+      flex: 1;
+      justify-content: center;
+      display: flex;
+      position: relative;
+
+      &-dialog {
+        position: absolute;
+        top: 30px;
+        z-index: 100000000000;
+      }
     }
   }
 </style>
