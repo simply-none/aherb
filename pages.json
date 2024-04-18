@@ -42,6 +42,7 @@
           "popGesture": "none",
           "animationType": "fade-in",
           "animationDuration": 200
+          "animationDuration": 50
         }
       }
     }
@@ -51,7 +52,9 @@
     "pageOrientation": "landscape",
     "navigationStyle": "custom",
     "app-plus": {
-      "titleNView": false
+      "titleNView": false,
+      "animationType": "fade-in",
+      "animationDuration": 50
     },
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",

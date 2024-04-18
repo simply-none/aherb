@@ -3,31 +3,35 @@
     <template v-slot:topright>
       <NDashboardSelectOrg></NDashboardSelectOrg>
     </template>
-    <template v-slot:body="{showSetting, showWebviews, onHandleData, activeTabComponent}">
-      <scroll-view scroll-y="true" :class="[showWebviews ? 'sbad-main-show' : 'sbad-main']">
+    <template v-slot:body="{showSetting, showWebviews, showApps, onHandleData, activeTabComponent}">
+      <scroll-view @scroll="onScroll" scroll-y="true" :class="[showWebviews ? 'sbad-main-show' : 'sbad-main']">
 
         <!--
                   此处遍历所有打开的web-view
                   当点击某个web-view时，将其加入到打开的数组中
                   当前web-view对象，设置为活跃对象，同时将其flex设为1
-                  非活跃对象，将其flex设为0，不占据任何空间
+                  非活跃对象，将其flex设为0，height为0，不占据任何空间
                  -->
         <view :class="['sbad-web-view-add', showWebviews ? 'sbad-web-view-add-show' : 'sbad-web-view-add-dis']">
-          <view :class="[showWebviews ? 'sbad-web-view-add-title-show' : 'sbad-web-view-add-title']">
-            <text class="font-size-base"></text>
+          <view
+            :class="['sbad-web-view-add-head', showWebviews ? 'sbad-web-view-add-title-show' : 'sbad-web-view-add-title']">
+            <text class="font-size-base sbad-web-view-add-head-left"></text>
+
           </view>
           <view :class="['sbad-web-view-add-inner']" @click.self="(data) => {
-              openApps(data, onHandleData)
-            }">
+                openApps(data, onHandleData)
+              }">
             <u--text class="sbad-web-view-add-txt" text="+" size="36"></u--text>
           </view>
         </view>
         <template v-for="webView in webViews">
           <st-web-view :key="webView.url" :show="showWebviews"
-            :class="['sbad-web-view', activeWebView.id === webView.id ? 'sbad-web-view-active' : 'sbad-web-view-dective', showWebviews ? 'sbad-web-view-show' : '']"
+            :class="['sbad-web-view', activeWebView.id === webView.id ? 'sbad-web-view-active' : 'sbad-web-view-dective', showWebviews ? 'sbad-web-view-show' : '', showApps ? 'sbad-web-view-hidden' : '']"
             :web-url="webView" @openActiveView="(data) => {
-              openActiveView(data, onHandleData)
-            }">
+                openActiveView(data, onHandleData)
+              }" @closeWebview="(data) => {
+                closeWebview(data, onHandleData)
+              }">
           </st-web-view>
         </template>
         <!-- 覆盖在web-view上的设置 -->
@@ -40,6 +44,11 @@
         </n-setting>
       </scroll-view>
 
+      <view v-if="showFixedBtn && showWebviews && !showApps " class="sbad-fixed" @click.self="(data) => {
+                openApps(data, onHandleData)
+              }">
+        <u-icon class="sbad-fixed-icon" name="plus" color="#fff"></u-icon>
+      </view>
     </template>
   </NDashboard>
 </template>
@@ -66,19 +75,55 @@
     mounted() {},
     data() {
       return {
-        showWebviews: true,
-        // activeTab: {
-        //   component: '',
-        //   openSetting: false,
-        // },
+        showFixedBtn: false,
         activeWebView: {
           // id: -1,
           // url: 'https://www.cnblogs.com/heisetianshi/p/15573264.html'
         },
-        webViews: [{
-          id: -1,
-          url: 'https://www.baidu.com'
-        }],
+        webViews: [
+
+          {
+            id: -1,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -12,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -13,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -14,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -15,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -16,
+            url: 'https://www.baidu.com'
+          },
+
+          {
+            id: -17,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -18,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -19,
+            url: 'https://www.baidu.com'
+          },
+          {
+            id: -10,
+            url: 'https://www.baidu.com'
+          },
+        ],
         innerCompInSys: {
           component: 'NSysSettingSesc',
           title: ''
@@ -103,6 +148,15 @@
       }
     },
     methods: {
+      closeWebview(webview) {
+        let index = this.webViews.findIndex(item => item.id === webview.id)
+        if (index !== -1) {
+          this.webViews.splice(index, 1)
+        }
+      },
+      onScroll(e) {
+        this.showFixedBtn = !!(e.detail.scrollTop > 200)
+      },
       // 点击app-navs
       setActiveWebview(data, onHandleData) {
         console.log('设置', this.webViews, data)
@@ -136,6 +190,11 @@
       // 点击设置中的返回按钮
       handleCloseSetting(date, onHandleData) {
         console.log('获取', arguments)
+
+        if (this.innerCompInSys.component === 'NEditPwd') {
+          this.editSysTitle('NSysSettingSesc')
+          return true
+        }
         onHandleData({
           type: 'setTab',
           subType: 'otherToTabViews',
@@ -205,6 +264,19 @@
         margin: 6rpx;
         display: flex;
 
+        &-head {
+
+
+          &-left {
+            flex: 1;
+
+          }
+
+          &-right {
+            text-align: right;
+          }
+        }
+
         &-inner {
           background-color: #b3b3b3;
           display: flex;
@@ -259,6 +331,26 @@
         height: 200rpx;
         color: blue;
       }
+
+      &-hidden {
+        flex: 0;
+        height: 0;
+        color: pink;
+      }
+    }
+
+    &-fixed {
+      position: fixed;
+      bottom: 50rpx;
+      right: 50rpx;
+      background-color: #2979ff;
+      border-radius: 50%;
+      padding: 2px;
+      width: 32rpx;
+      height: 32rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
   }

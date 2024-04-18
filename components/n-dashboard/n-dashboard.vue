@@ -25,7 +25,7 @@
 
       <!-- 窗口内容-窗口主体 -->
       <slot name="body" :showSetting="activeTab.showSetting" :showWebviews="activeTab.showWebviews"
-        :activeTabComponent="activeTab.component" :onHandleData="onHandleData"></slot>
+        :showApps="activeTab.showApps" :activeTabComponent="activeTab.component" :onHandleData="onHandleData"></slot>
     </view>
   </view>
 </template>
@@ -147,7 +147,9 @@
 
         this.activeTab = Object.assign({}, this.activeTab, {
           ...tab,
-          ...component
+          ...component,
+          // 是否展示打开的apps列表
+          showApps: ['clickAdd', 'tab'].includes(type)
         })
 
         this.asideTabs.forEach(item => {

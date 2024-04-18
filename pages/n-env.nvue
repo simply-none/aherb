@@ -111,7 +111,7 @@
           key: 'envInfo',
           success(data) {
             console.log(data, 'data')
-            uni.navigateBack({
+            uni.navigateTo({
               url: '/pages/n-login',
               success() {
                 console.log('suc')

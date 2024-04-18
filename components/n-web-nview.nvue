@@ -1,7 +1,10 @@
 <template>
   <view :class="[show ? 'n-web-nview-show' : 'n-web-nview']">
-    <view :class="[show ? 'n-web-nview-title-show' : 'n-web-nview-title']">
-      <text class="font-size-base">{{ webUrl.name || '应用名称' }}</text>
+    <view :class="['n-web-nview-title', show ? 'n-web-nview-title-show' : 'n-web-nview-title-hidden']">
+      <text class="font-size-base n-web-nview-title-left">{{ webUrl.name || '应用名称' }}</text>
+      <view class="font-size-base n-web-nview-title-right" @click="onClose">
+        <u-icon name="close"></u-icon>
+      </view>
     </view>
     <cover-view class="n-web-nview-wrapper">
 
@@ -29,10 +32,13 @@
     },
     data() {
       return {
-
+        showClose: false,
       };
     },
     methods: {
+      onClose() {
+        this.$emit('closeWebview', this.webUrl)
+      },
       openActiveView() {
         console.log('hhhhhhhhhh')
         this.$emit('openActiveView', this.webUrl)
@@ -83,7 +89,31 @@
     }
 
     &-title {
-      height: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: flex-start;
+
+      &-left {
+        display: flex;
+        flex: 3;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      &-right {
+        display: flex;
+        flex: 1;
+
+        text-align: right;
+        justify-content: center;
+        align-items: flex-end;
+
+      }
+
+      &-hidden {
+        height: 0;
+      }
 
       &-show {
         height: 20rpx;
